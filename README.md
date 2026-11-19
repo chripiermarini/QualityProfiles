@@ -217,7 +217,6 @@ them, also restricted to one problem dimension, e.g. `load("cutest_smooth", n=10
 
 | File | Problems | Solvers | Paper figures |
 | --- | --- | --- | --- |
-| `two_solvers.csv` | 166 | Solver-1, Solver-2 | 2, 3 |
 | `cutest_smooth.csv` | 166 | L-BFGS, CG+, TRON, CG_DESCENT | 4–8 |
 | `negative_curvature.csv` | 166 | TN-NONegCurv, TN-NC1, TN-NC2, TN-NC3 | 9–11 |
 | `dfo_budget_1000n.csv` | 145 | NEWUOA and six Direct Search methods | 12 |

@@ -7,7 +7,7 @@ Usage::
 
     uv run python examples/try_plot_styles.py                        # all datasets, r1 = 5
     uv run python examples/try_plot_styles.py cutest_smooth --r1 1   # one dataset, other r1
-    uv run python examples/try_plot_styles.py two_solvers --r1 10 --r2 3
+    uv run python examples/try_plot_styles.py negative_curvature --r1 5 --r2 3
     uv run python examples/try_plot_styles.py --strong --linear      # strong profiles, linear axis
     uv run python examples/try_plot_styles.py --list                 # show the datasets
 

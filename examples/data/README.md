@@ -3,8 +3,7 @@
 Each CSV file holds one experiment of arXiv:2607.16798. There is one row per test
 problem, with the columns:
 
-* `problem`, `n`: the CUTEst problem and its dimension (not available for
-  `two_solvers.csv`);
+* `problem`, `n`: the CUTEst problem and its dimension;
 * `f0`: the objective value at the common starting point;
 * one column per solver, with the best objective value it found; the header gives the
   solver name.
@@ -22,7 +21,6 @@ f0, f_solvers, names = load("cutest_smooth", n=10000)   # the 45 instances with 
 
 | File | Problems | Solvers | Paper figures |
 | --- | --- | --- | --- |
-| `two_solvers.csv` | 166 | Solver-1, Solver-2 | 2 (`r1=10, r2=3`), 3 (`r1=4, r2=1`) |
 | `cutest_smooth.csv` | 166 | L-BFGS, CG+, TRON, CG_DESCENT | 4 (`r1=1`), 5 (`r1=5`), 6–8 |
 | `negative_curvature.csv` | 166 | TN-NONegCurv, TN-NC1, TN-NC2, TN-NC3 | 9–11 |
 | `dfo_budget_1000n.csv` | 145 | NEWUOA, ALG1, ALG2, ALG4, ALG6, ALG7, ALG8 | 12 (budget 1000·n) |

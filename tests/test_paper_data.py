@@ -25,13 +25,12 @@ DFO = ["dfo_budget_1000n", "dfo_budget_750n", "dfo_budget_500n", "dfo_budget_250
 
 
 def test_datasets(paper_data):
-    assert paper_data.dataset_names() == sorted(["two_solvers", *SMOOTH, *DFO])
+    assert paper_data.dataset_names() == sorted([*SMOOTH, *DFO])
 
 
 @pytest.mark.parametrize(
     ("name", "rows", "solvers"),
     [
-        ("two_solvers", 166, ["Solver-1", "Solver-2"]),
         ("cutest_smooth", 166, ["L-BFGS", "CG+", "TRON", "CG_DESCENT"]),
         ("negative_curvature", 166, ["TN-NONegCurv", "TN-NC1", "TN-NC2", "TN-NC3"]),
         ("dfo_budget_250n", 145, ["NEWUOA", "ALG1", "ALG2", "ALG4", "ALG6", "ALG7", "ALG8"]),
@@ -99,10 +98,21 @@ def test_several_dimensions(paper_data):
 def test_loader_errors(paper_data):
     with pytest.raises(FileNotFoundError, match="unknown dataset"):
         paper_data.load("nope")
-    with pytest.raises(ValueError, match="does not record the problem dimension"):
-        paper_data.load("two_solvers", n=100)
     with pytest.raises(ValueError, match="no problem with n = 7"):
         paper_data.load("cutest_smooth", n=7)
+
+
+def test_dataset_without_problem_columns(paper_data, tmp_path, monkeypatch):
+    # Files with only f0 and the solvers (e.g. a user's own results) are supported.
+    (tmp_path / "mine.csv").write_text("f0,A,B\n10,1,2\n5,0,0.5\n", encoding="utf-8")
+    monkeypatch.setattr(paper_data, "DATA", tmp_path)
+    f0, f_solvers, names = paper_data.load("mine")
+    np.testing.assert_array_equal(f0, [10, 5])
+    np.testing.assert_array_equal(f_solvers, [[1, 2], [0, 0.5]])
+    assert names == ["A", "B"]
+    assert paper_data.problems("mine") == (None, None)
+    with pytest.raises(ValueError, match="does not record the problem dimension"):
+        paper_data.load("mine", n=100)
 
 
 @pytest.mark.parametrize(
@@ -120,7 +130,7 @@ def test_example_scripts_run(script, args, tmp_path, monkeypatch):
     if script == "reproduce_paper_figures.py":
         monkeypatch.setattr(sys, "argv", [script, str(tmp_path)])
         runpy.run_path(str(EXAMPLES / script), run_name="__main__")
-        assert len(list(tmp_path.glob("*.png"))) == 14
+        assert len(list(tmp_path.glob("*.png"))) == 12
     else:
         module = runpy.run_path(str(EXAMPLES / script))
         out = tmp_path / "figure.png"

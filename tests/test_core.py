@@ -40,7 +40,7 @@ def test_matches_reference_loop_on_random_data(random_problem, r1, r2, strong):
 @pytest.mark.parametrize(
     ("name", "r1", "r2"),
     [
-        ("two_solvers", 4, 1),
+        ("cutest_smooth", 10, 3),
         ("cutest_smooth", 1, 1),
         ("cutest_smooth", 5, 1),
         ("negative_curvature", 2, 1),

@@ -31,8 +31,6 @@ from quality_profiles import plot_quality_profiles, quality_profiles
 
 # (output name, dataset, problem dimension or None for all, r1, r2, logscale)
 FIGURES = [
-    ("fig02", "two_solvers", None, 10, 3, True),
-    ("fig03", "two_solvers", None, 4, 1, True),
     ("fig04", "cutest_smooth", None, 1, 1, True),
     ("fig05", "cutest_smooth", None, 5, 1, True),
     ("fig08", "cutest_smooth", None, 1, 1, False),

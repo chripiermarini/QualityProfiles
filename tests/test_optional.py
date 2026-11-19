@@ -86,7 +86,7 @@ def test_ieee_style_uses_its_own_line_styles(profile):
     assert [line.get_linestyle() for line in ax.get_lines()] == ["-", "--", ":"]
 
 
-def test_short_style_cycle_never_draws_two_solvers_alike(rng):
+def test_short_style_cycle_never_draws_solvers_alike(rng):
     pytest.importorskip("scienceplots")
     f0 = rng.random(30)
     many = quality_profiles(f0, f0[:, None] - rng.random((30, 7)), n_intervals=50)
