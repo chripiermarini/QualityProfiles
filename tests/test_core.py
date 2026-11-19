@@ -315,3 +315,24 @@ def test_profile_is_immutable(random_problem):
     qp = quality_profiles(*random_problem)
     with pytest.raises(AttributeError):
         qp.r1 = 2.0  # type: ignore[misc]
+    for array in (qp.tau, qp.precision, qp.values, qp["Solver-1"]):
+        with pytest.raises(ValueError, match="read-only"):
+            array[0] = 0.5
+    # a copy can be modified, and the profile stays unchanged
+    copy = qp.values.copy()
+    copy[:] = 0.0
+    assert qp.values[-1, 2] == 1.0
+
+
+def test_profiles_compare_by_identity_and_are_hashable(random_problem):
+    a = quality_profiles(*random_problem)
+    b = quality_profiles(*random_problem)
+    assert a == a
+    assert a != b  # distinct objects, even with equal data; no ambiguous-array error
+    assert len({a, b, a}) == 2
+
+
+@pytest.mark.parametrize("bad", [float("nan"), float("inf"), "10", object(), -3, 0, 2.5])
+def test_invalid_n_intervals_message(bad):
+    with pytest.raises(ValueError, match="n_intervals must be a positive integer"):
+        quality_profiles([1.0], [[0.0]], n_intervals=bad)

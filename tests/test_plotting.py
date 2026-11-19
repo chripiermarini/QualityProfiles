@@ -79,6 +79,17 @@ def test_profiles_are_drawn_as_steps(profile):
     assert all(line.get_drawstyle() == "steps-post" for line in ax.get_lines())
 
 
+def test_underflowing_precision_levels_are_skipped_on_log_axes():
+    # with r1 = 100 the first levels (1/n)**100 underflow to 0
+    qp = quality_profiles([1.0, 1.0], [[1e-300, 0.5], [0.0, 0.0]], r1=100)
+    assert (qp.precision[1:] == 0).any()
+    ax = plot_quality_profiles(qp)
+    ax.figure.canvas.draw()
+    x = ax.get_lines()[0].get_xdata()
+    assert np.all(x > 0)
+    assert ax.get_xlim()[0] > 0
+
+
 def test_outside_legend(profile):
     ax = plot_quality_profiles(profile, legend_loc="outside right center")
     assert ax.get_legend() is None

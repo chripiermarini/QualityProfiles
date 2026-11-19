@@ -201,6 +201,14 @@ def test_interactive_subset_and_colors(profile):
         plot_quality_profiles_interactive(profile, colors="rainbow")
 
 
+def test_interactive_with_underflowing_precision_levels():
+    pytest.importorskip("plotly")
+    qp = quality_profiles([1.0, 1.0], [[1e-300, 0.5], [0.0, 0.0]], r1=100)
+    fig = plot_quality_profiles_interactive(qp)  # used to fail with "math domain error"
+    assert all(np.all(np.asarray(t.x) > 0) for t in fig.data)
+    assert np.isfinite(fig.layout.xaxis.range).all()
+
+
 def test_interactive_html_export(profile, tmp_path):
     pytest.importorskip("plotly")
     out = tmp_path / "qp.html"

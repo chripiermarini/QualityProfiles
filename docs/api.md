@@ -65,7 +65,10 @@ The inputs are never modified.
 
 ### `QualityProfile`
 
-Immutable result of [`quality_profiles`](#quality_profiles).
+Immutable result of [`quality_profiles`](#quality_profiles): the attributes cannot be
+reassigned and the arrays are read-only (call `.copy()` on an array to modify it). Two
+profiles compare equal only if they are the same object, and profiles can be used in sets
+and as dictionary keys.
 
 | Attribute | Type | Description |
 | --- | --- | --- |

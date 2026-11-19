@@ -96,11 +96,14 @@ def split_matrix(matrix: ArrayLike) -> tuple[FloatArray, FloatArray]:
     return tt[:, 0].copy(), tt[:, 1:].copy()
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, eq=False)
 class QualityProfile:
     r"""Quality profiles of a set of solvers on a set of test problems.
 
-    Instances are created by :func:`quality_profiles`; they are immutable.
+    Instances are created by :func:`quality_profiles`. They are immutable: the
+    attributes cannot be reassigned and the arrays are read-only (use
+    ``.copy()`` to get a modifiable array). Two instances compare equal only if
+    they are the same object.
 
     Attributes
     ----------
@@ -303,11 +306,7 @@ def quality_profiles(
             f"{bad.size} problem(s) (row indices: {shown}); quality profiles are not defined"
         )
 
-    if n_intervals is None:
-        n_intervals = default_n_intervals(r1)
-    elif isinstance(n_intervals, bool) or int(n_intervals) != n_intervals or n_intervals < 1:
-        raise ValueError(f"n_intervals must be a positive integer, got {n_intervals!r}")
-    n_intervals = int(n_intervals)
+    n_intervals = _check_intervals(n_intervals, r1)
 
     tau = np.arange(n_intervals + 1, dtype=np.float64) * (1.0 / n_intervals)
     precision = tau**r1
@@ -316,6 +315,8 @@ def quality_profiles(
     gap_start = start - reference
     counts = _count_successes(precision, gap_solvers, gap_start)
     values = (counts / n_problems) ** r2
+    for array in (tau, precision, values, gap_solvers, gap_start):
+        array.flags.writeable = False
 
     return QualityProfile(
         tau=tau,
@@ -428,6 +429,18 @@ def _solver_names(names: Sequence[str] | None, n_solvers: int) -> tuple[str, ...
     if len(set(result)) != len(result):
         raise ValueError("solver names must be unique")
     return result
+
+
+def _check_intervals(n_intervals: int | None, r1: float) -> int:
+    if n_intervals is None:
+        return default_n_intervals(r1)
+    try:
+        valid = not isinstance(n_intervals, bool) and int(n_intervals) == n_intervals >= 1
+    except (TypeError, ValueError, OverflowError):
+        valid = False
+    if not valid:
+        raise ValueError(f"n_intervals must be a positive integer, got {n_intervals!r}")
+    return int(n_intervals)
 
 
 def _check_exponent(value: float, name: str) -> float:

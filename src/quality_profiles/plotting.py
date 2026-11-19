@@ -7,6 +7,7 @@ from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any, Literal, cast
 
 import numpy as np
+from numpy.typing import NDArray
 
 from .core import QualityProfile
 
@@ -117,6 +118,20 @@ def paper_colors(n_solvers: int) -> list[tuple[float, float, float]]:
         raise ValueError("n_solvers must be at least 1")
     red = np.linspace(1.0, 0.0, n_solvers)
     return [(float(r), 0.0, float(1.0 - r)) for r in red]
+
+
+def plotted_rows(precision: NDArray[np.float64], logscale: bool) -> NDArray[np.bool_]:
+    r"""Grid points that can be drawn: on a log axis, only positive precision levels.
+
+    Besides :math:`\tau = 0`, a large ``r1`` can make the first levels underflow
+    to 0 (for example ``r1 = 100``); those cannot be placed on a log axis either.
+    """
+    if not logscale:
+        return np.ones(precision.shape, dtype=bool)
+    mask = precision > 0
+    if not mask.any():
+        raise ValueError("no positive precision level to draw on a logarithmic axis")
+    return mask
 
 
 def plot_quality_profiles(
@@ -278,7 +293,7 @@ def _draw(
         linewidth = 2.0 if themed else float(plt.rcParams["lines.linewidth"])
 
     x = profile.precision
-    rows = slice(1, None) if logscale else slice(None)
+    rows = plotted_rows(x, logscale)
     profile_lines = []
     for col in columns:
         (line,) = ax.plot(

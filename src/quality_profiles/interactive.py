@@ -10,7 +10,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from .core import QualityProfile
-from .plotting import DEFAULT_LINEAR_REFERENCE_LINES, default_colors, paper_colors
+from .plotting import DEFAULT_LINEAR_REFERENCE_LINES, default_colors, paper_colors, plotted_rows
 
 __all__ = ["plot_quality_profiles_interactive", "step_points"]
 
@@ -117,7 +117,7 @@ def plot_quality_profiles_interactive(
         palette = list(colors)
 
     x = profile.precision
-    rows = slice(1, None) if logscale else slice(None)
+    rows = plotted_rows(x, logscale)
     fig = go.Figure()
     for col in columns:
         name = profile.solver_names[col]
