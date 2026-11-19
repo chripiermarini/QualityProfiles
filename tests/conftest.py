@@ -11,8 +11,14 @@ matplotlib.use("Agg")
 DATA_DIR = Path(__file__).resolve().parents[1] / "examples" / "data"
 
 
-def reference_loop(f0, fs, r1=1.0, r2=1.0, strong=False, n_intervals=None):
-    """Line-by-line port of the reference MATLAB implementation (no vectorization)."""
+def reference_loop(f0, fs, r1=1.0, r2=1.0, strong=False, n_intervals=None, precision=None):
+    """Line-by-line port of the reference MATLAB implementation (no vectorization).
+
+    ``precision`` optionally fixes the grid of precision levels. The grid
+    ``(k / n) ** r1`` may differ in the last bit between scalar and vectorized
+    power functions (e.g. SIMD code on some CPUs), so tests that compare the
+    counting decisions bit for bit pass the package's own grid here.
+    """
     f0 = np.array(f0, dtype=float)
     fs = np.asarray(fs, dtype=float)
     n_problems, n_solvers = fs.shape
@@ -31,7 +37,7 @@ def reference_loop(f0, fs, r1=1.0, r2=1.0, strong=False, n_intervals=None):
     q = np.empty((n_intervals + 1, n_solvers))
     for s in range(n_solvers):
         for t in range(n_intervals + 1):
-            tau[t] = (t * stepsize) ** r1
+            tau[t] = (t * stepsize) ** r1 if precision is None else precision[t]
             counter = 0
             for w in range(n_problems):
                 if (

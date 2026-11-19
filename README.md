@@ -1,5 +1,20 @@
 # quality-profiles
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/chripiermarini/QualityProfiles?style=flat&logo=github)](https://github.com/chripiermarini/QualityProfiles/stargazers)
+[![Tests](https://github.com/chripiermarini/QualityProfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/chripiermarini/QualityProfiles/actions/workflows/ci.yml)
+[![Lint](https://github.com/chripiermarini/QualityProfiles/actions/workflows/lint.yml/badge.svg)](https://github.com/chripiermarini/QualityProfiles/actions/workflows/lint.yml)
+[![Coverage](https://codecov.io/gh/chripiermarini/QualityProfiles/branch/main/graph/badge.svg)](https://codecov.io/gh/chripiermarini/QualityProfiles)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?logo=python&logoColor=white)](pyproject.toml)
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey)](.github/workflows/ci.yml)
+[![PyPI version](https://img.shields.io/pypi/v/quality-profiles?logo=pypi&logoColor=white)](https://pypi.org/project/quality-profiles/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/quality-profiles?label=PyPI%20downloads)](https://pypi.org/project/quality-profiles/)
+[![Conda version](https://img.shields.io/conda/vn/conda-forge/quality-profiles?logo=anaconda&logoColor=white)](https://anaconda.org/conda-forge/quality-profiles)
+[![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/quality-profiles?label=conda%20downloads)](https://anaconda.org/conda-forge/quality-profiles)
+[![Docs](https://img.shields.io/badge/docs-markdown-informational)](docs/)
+[![Paper](https://img.shields.io/badge/arXiv-2607.16798-b31b1b.svg)](https://arxiv.org/abs/2607.16798)
+
 **Quality profiles** for benchmarking optimization algorithms by the *quality* of the
 solutions they return, in Python.
 
@@ -83,59 +98,31 @@ for a walk-through of the paper's examples on the published results.
 
 ## What is computed
 
-Let $f_s^{(p)}$ be the best value found by solver $s$ on problem $p$,
-$f^{(p)}(x_0^{(p)})$ the value at the starting point, and $f_L^{(p)}$ a reference value
-(by default $\min_s f_s^{(p)}$). The **(weak) quality profile** of solver $s$ is
+For every solver $s$ and precision level $\tau \in [0, 1]$, the quality profile
+$Q_s(\tau)$ is the fraction of test problems on which $s$ reduced the gap between the
+starting value $f(x_0)$ and a reference value $f_L$ (by default the best value found by
+any solver) by at least a factor $\tau$. The package computes the scaled profiles
+$[Q_s(\tau^{r_1})]^{r_2}$: `r1` zooms the abscissa, `r2` the ordinate, and neither changes
+the ranking of the solvers.
 
-$$
-Q_s(\tau) = \frac{1}{|P|}\,\mathrm{size}\Big\{p \in P :
-f_s^{(p)} - f_L^{(p)} \le \tau\,\big(f^{(p)}(x_0^{(p)}) - f_L^{(p)}\big)\Big\},
-\qquad \tau \in [0, 1].
-$$
+On a semilog plot, the value at precision $10^{-k}$ is the fraction of problems on which
+a solver gained at least $k$ orders of magnitude; the higher the curve, the better.
 
-The **strong** quality profile (`strong=True`) replaces $f^{(p)}(x_0^{(p)})$ with
-$\max_s f_s^{(p)}$. The package samples $[Q_s(\tau^{r_1})]^{r_2}$ for $\tau$ on a uniform
-grid, where
-
-* `r1 > 1` zooms in on high accuracy (precision levels close to 0), and `r1 < 1` zooms in
-  near 1;
-* `r2 > 1` stretches the ordinate near 0, and `r2 < 1` stretches it near 1.
-
-The relative ranking of the solvers does not depend on `r1` or `r2`. The defaults are
-`r1 = r2 = 1`.
-
-How to read a profile:
-
-* $Q_s(0)$ is the fraction of problems on which $s$ found the best value;
-* $Q_s(1) < 1$ means $s$ failed, or ended above $f(x_0)$, on some problems;
-* on a semilog plot, the value at $\tau = 10^{-k}$ is the fraction of problems on which
-  $s$ reduced $f(x_0) - f_L$ by at least $k$ orders of magnitude;
-* the higher the curve, the better the solver.
+The definitions, weak and strong profiles, the choice of reference value, the scaling,
+the properties proved in the paper and the handling of failures are described in
+[**docs/what-is-computed.md**](docs/what-is-computed.md).
 
 ## API
 
 | Function / class | Description |
 | --- | --- |
-| `quality_profiles(f0, f_solvers, *, solver_names, r1, r2, strong, f_ref, n_intervals)` | Compute the profiles; returns a `QualityProfile`. |
-| `QualityProfile.tau`, `.precision`, `.values` | Uniform grid $\tau$, abscissa $\tau^{r_1}$ and values $[Q_s(\tau^{r_1})]^{r_2}$ (one column per solver). |
-| `QualityProfile.evaluate(levels)` | Exact profile values at arbitrary precision levels. |
-| `QualityProfile.area()` / `.ranking()` | Area under each profile, and solvers sorted by area. |
-| `QualityProfile["name"]` | Values of one solver. |
-| `plot_quality_profiles(profile, ax=None, *, logscale=True, style=None, ...)` | Matplotlib step plot. Colors and line styles follow the solver; `colors="paper"` uses the paper's red-to-blue colors. `style=` applies a matplotlib or SciencePlots style. |
-| `plot_quality_profiles_interactive(profile, *, logscale=True, ...)` | Interactive Plotly figure with zoom, hover values and legend toggling (`[interactive]` extra). |
-| `split_matrix(tt)` | Split a `P x (1+S)` matrix (`f0` column, then one column per solver), the layout of the MATLAB code. |
-| `default_n_intervals(r1)` | Default grid size, `floor(max(1000, 1000*r1, 1000/r1))`. |
+| `quality_profiles(f0, f_solvers, ...)` | Compute the profiles; returns a `QualityProfile`. |
+| `QualityProfile` | Sampled profiles, with `evaluate(levels)`, `area()` and `ranking()`. |
+| `plot_quality_profiles(profile, ...)` | Matplotlib step plot, optionally with a matplotlib or SciencePlots `style`. |
+| `plot_quality_profiles_interactive(profile, ...)` | Interactive Plotly figure (`[interactive]` extra). |
+| `split_matrix(tt)` | Split a MATLAB-style `P x (1+S)` results matrix into `f0` and `f_solvers`. |
 
-Notes on the inputs:
-
-* A non-finite value in `f_solvers` is a failure. A solver that ends above `f0` is never
-  credited on that problem.
-* Failures count in the denominator $|P|$, so they keep the profile below 1.
-* `f_ref` can hold reference values that do not depend on the solvers, for instance known
-  optimal values. Each profile is then independent of the other solvers (Lemma 2.7 of the
-  paper).
-* A `ValueError` is raised if $f_L^{(p)} > f^{(p)}(x_0^{(p)})$ on some problem. On such a
-  problem the profiles are not defined.
+Every parameter, return value and error is documented in [**docs/api.md**](docs/api.md).
 
 ## Reproducing the paper's figures
 

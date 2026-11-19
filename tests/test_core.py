@@ -24,9 +24,15 @@ def test_matches_reference_loop_on_random_data(random_problem, r1, r2, strong):
     f0, fs = random_problem
     fs = fs.copy()
     fs[::7, 1] = np.nan  # some failures
-    tau_ref, q_ref = reference_loop(f0, fs, r1=r1, r2=r2, strong=strong, n_intervals=200)
     qp = quality_profiles(f0, fs, r1=r1, r2=r2, strong=strong, n_intervals=200)
-    np.testing.assert_array_equal(qp.precision, tau_ref)
+    # The grid follows the MATLAB formula up to rounding: vectorized and scalar
+    # power functions may differ in the last bit, depending on the CPU.
+    tau_ref, _ = reference_loop(f0, fs, r1=r1, r2=r2, strong=strong, n_intervals=200)
+    np.testing.assert_allclose(qp.precision, tau_ref, rtol=1e-15, atol=0)
+    # On the same grid, every counting decision is identical, bit for bit.
+    _, q_ref = reference_loop(
+        f0, fs, r1=r1, r2=r2, strong=strong, n_intervals=200, precision=qp.precision
+    )
     np.testing.assert_array_equal(qp.values, q_ref)
 
 
@@ -43,8 +49,8 @@ def test_matches_reference_loop_on_random_data(random_problem, r1, r2, strong):
 def test_matches_reference_loop_on_paper_data(name, r1, r2):
     f0, fs, names = load_csv(name)
     n = 300
-    _, q_ref = reference_loop(f0, fs, r1=r1, r2=r2, n_intervals=n)
     qp = quality_profiles(f0, fs, solver_names=names, r1=r1, r2=r2, n_intervals=n)
+    _, q_ref = reference_loop(f0, fs, r1=r1, r2=r2, n_intervals=n, precision=qp.precision)
     np.testing.assert_array_equal(qp.values, q_ref)
     assert qp.solver_names == tuple(names)
 
@@ -54,8 +60,8 @@ def test_boundary_values_are_decided_exactly():
     n = 10
     f0 = np.full(n + 1, 3.0)
     fs = np.column_stack([np.arange(n + 1) * 0.3, np.zeros(n + 1)])
-    _, q_ref = reference_loop(f0, fs, n_intervals=n)
     qp = quality_profiles(f0, fs, n_intervals=n)
+    _, q_ref = reference_loop(f0, fs, n_intervals=n, precision=qp.precision)
     np.testing.assert_array_equal(qp.values, q_ref)
 
 

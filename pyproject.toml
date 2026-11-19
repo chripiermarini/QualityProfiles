@@ -51,6 +51,9 @@ science = ["SciencePlots>=2.1"]
 all = ["plotly>=5.18", "SciencePlots>=2.1"]
 
 [project.urls]
+Repository = "https://github.com/chripiermarini/QualityProfiles"
+Documentation = "https://github.com/chripiermarini/QualityProfiles/tree/main/docs"
+Issues = "https://github.com/chripiermarini/QualityProfiles/issues"
 Paper = "https://arxiv.org/abs/2607.16798"
 "MATLAB code" = "https://github.com/fasano-g/Quality-Profiles"
 
@@ -75,7 +78,12 @@ packages = ["src/quality_profiles"]
 [tool.pytest.ini_options]
 testpaths = ["tests", "src"]
 addopts = "-ra --strict-markers --doctest-modules"
-filterwarnings = ["error"]
+filterwarnings = [
+    "error",
+    # nbmake (third party) calls asyncio APIs deprecated in Python 3.14 when it loads on Windows
+    "ignore:'asyncio.WindowsSelectorEventLoopPolicy' is deprecated:DeprecationWarning",
+    "ignore:'asyncio.set_event_loop_policy' is deprecated:DeprecationWarning",
+]
 
 [tool.coverage.run]
 source = ["quality_profiles"]
