@@ -1,12 +1,12 @@
 [build-system]
-requires = ["hatchling>=1.26"]
+requires = ["hatchling>=1.26", "hatch-fancy-pypi-readme>=24.1"]
 build-backend = "hatchling.build"
 
 [project]
 name = "quality-profiles"
-version = "0.1.0"
+version = "1.0.0"
 description = "Quality profiles for benchmarking optimization algorithms by the quality of the solutions they find."
-readme = "README.md"
+dynamic = ["readme"]
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -26,7 +26,7 @@ keywords = [
     "derivative-free optimization",
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
@@ -54,8 +54,36 @@ all = ["plotly>=5.18", "SciencePlots>=2.1"]
 Repository = "https://github.com/chripiermarini/QualityProfiles"
 Documentation = "https://github.com/chripiermarini/QualityProfiles/tree/main/docs"
 Issues = "https://github.com/chripiermarini/QualityProfiles/issues"
+Changelog = "https://github.com/chripiermarini/QualityProfiles/blob/main/docs/CHANGELOG.md"
 Paper = "https://arxiv.org/abs/2607.16798"
 "MATLAB code" = "https://github.com/fasano-g/Quality-Profiles"
+
+# The README uses paths relative to the repository, which work on GitHub but not on
+# PyPI: the long description published on PyPI points them to the GitHub repository.
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "README.md"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+# images and GIFs: the raw files
+pattern = 'src="(?!https?://)([^"]+)"'
+replacement = 'src="https://raw.githubusercontent.com/chripiermarini/QualityProfiles/main/\1"'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+# links to sections of the README: the README on GitHub
+pattern = 'href="#([^"]+)"'
+replacement = 'href="https://github.com/chripiermarini/QualityProfiles#\1"'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+# links to files and folders, in HTML and in Markdown
+pattern = 'href="(?!https?://)([^"]+)"'
+replacement = 'href="https://github.com/chripiermarini/QualityProfiles/blob/main/\1"'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '\]\((?!https?://|#)([^)]+)\)'
+replacement = '](https://github.com/chripiermarini/QualityProfiles/blob/main/\1)'
 
 [dependency-groups]
 dev = [
@@ -71,6 +99,7 @@ dev = [
 
 [tool.hatch.build.targets.sdist]
 include = ["src", "tests", "notebooks", "examples", "docs", "README.md", "LICENSE", "CITATION.cff", "pyproject.toml"]
+exclude = ["examples/figures", "**/__pycache__"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/quality_profiles"]

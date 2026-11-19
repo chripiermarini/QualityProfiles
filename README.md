@@ -87,7 +87,9 @@ uv sync                    # .venv with the package, Plotly, SciencePlots and th
 
 Requires Python 3.10 or later.
 
-> The package is at version 0.1. The API may still change between minor versions.
+> Quality Profiles follows [semantic versioning](https://semver.org): within version 1.x
+> the public API does not change in incompatible ways. See the
+> [changelog](docs/CHANGELOG.md).
 
 ## Quick start
 
@@ -190,12 +192,12 @@ quality profiles do.
   <img src="docs/assets/same_start_different_minima.svg" alt="Two solvers start from the same point: Solver A is fast but stops in a shallow valley, Solver B is slower but finds the deeper one; the difference between the two final values is the quality gap" width="80%">
 </p>
 
-For every solver $s$ and precision level $\tau \in [0, 1]$, the quality profile
-$Q_s(\tau)$ is the fraction of test problems on which $s$ reduced the gap between the
-starting value $f(x_0)$ and a reference value $f_L$ (by default the best value found by
-any solver) by at least a factor $\tau$. The package computes the scaled profiles
-$[Q_s(\tau^{r_1})]^{r_2}$: `r1` zooms the abscissa, `r2` the ordinate, and neither changes
-the ranking of the solvers.
+For every solver *s* and precision level τ ∈ [0, 1], the quality profile
+Q<sub>s</sub>(τ) is the fraction of test problems on which *s* reduced the gap between
+the starting value f(x<sub>0</sub>) and a reference value f<sub>L</sub> (by default the
+best value found by any solver) by at least a factor τ. The package computes the scaled
+profiles [Q<sub>s</sub>(τ<sup>r1</sup>)]<sup>r2</sup>: `r1` zooms the abscissa, `r2` the
+ordinate, and neither changes the ranking of the solvers.
 
 All the package needs is one final value per problem and solver, plus the value at the
 common starting point:
@@ -204,8 +206,8 @@ common starting point:
   <img src="docs/assets/three_steps.svg" alt="Three steps: run the solvers on the same problems from the same starting points, collect one final value per problem and solver, read the quality profiles, where a higher curve means better solutions" width="80%">
 </p>
 
-On a semilog plot, the value at precision $10^{-k}$ is the fraction of problems on which
-a solver gained at least $k$ orders of magnitude; the higher the curve, the better.
+On a semilog plot, the value at precision 10<sup>−k</sup> is the fraction of problems on
+which a solver gained at least *k* orders of magnitude; the higher the curve, the better.
 
 The definitions, weak and strong profiles, the choice of reference value, the scaling,
 the properties proved in the paper and the handling of failures are described in
