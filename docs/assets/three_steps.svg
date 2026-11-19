@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="510" viewBox="0 0 1280 510" role="img" aria-label="Workflow: run solvers, collect final values, read quality profiles">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F8FAFC"/><stop offset="1" stop-color="#EEF3F9"/></linearGradient><linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCE7F5"/><stop offset="1" stop-color="#EEF3F9"/></linearGradient><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748B"/></marker></defs>
+<rect width="1280" height="510" rx="28" fill="url(#bg)"/>
+<text x="640.0" y="78" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="42" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing="-0.8">From solver runs to quality profiles in three steps</text>
+<rect x="70.0" y="130" width="340" height="330" rx="22" fill="#FFFFFF" stroke="#DCE4EE" stroke-width="1.5"/>
+<text x="240.0" y="174" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#0F172A" text-anchor="middle" >1  Run your solvers</text>
+<text x="240.0" y="432" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="400" fill="#64748B" text-anchor="middle" >Same problems, same starting points.</text>
+<line x1="418.0" y1="295.0" x2="462.0" y2="295.0" stroke="#64748B" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="470.0" y="130" width="340" height="330" rx="22" fill="#FFFFFF" stroke="#DCE4EE" stroke-width="1.5"/>
+<text x="640.0" y="174" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#0F172A" text-anchor="middle" >2  Collect final values</text>
+<text x="640.0" y="432" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="400" fill="#64748B" text-anchor="middle" >One value per problem and solver.</text>
+<line x1="818.0" y1="295.0" x2="862.0" y2="295.0" stroke="#64748B" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="870.0" y="130" width="340" height="330" rx="22" fill="#FFFFFF" stroke="#DCE4EE" stroke-width="1.5"/>
+<text x="1040.0" y="174" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#0F172A" text-anchor="middle" >3  Read the profiles</text>
+<text x="1040.0" y="432" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="400" fill="#64748B" text-anchor="middle" >Higher curve = better solutions.</text>
+<rect x="106.0" y="210" width="150" height="42" rx="21" fill="#2563EB"/>
+<text x="181.0" y="238" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#fff" text-anchor="middle" >Solver A</text>
+<line x1="274.0" y1="231" x2="370.0" y2="231" stroke="#2563EB" stroke-width="4" stroke-dasharray="1 11" stroke-linecap="round"/>
+<path d="M366.0,219 L384.0,231 L366.0,243 Z" fill="#2563EB"/>
+<rect x="106.0" y="272" width="150" height="42" rx="21" fill="#E8743B"/>
+<text x="181.0" y="300" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#fff" text-anchor="middle" >Solver B</text>
+<line x1="274.0" y1="293" x2="370.0" y2="293" stroke="#E8743B" stroke-width="4" stroke-dasharray="1 11" stroke-linecap="round"/>
+<path d="M366.0,281 L384.0,293 L366.0,305 Z" fill="#E8743B"/>
+<rect x="106.0" y="334" width="150" height="42" rx="21" fill="#0F9F8F"/>
+<text x="181.0" y="362" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#fff" text-anchor="middle" >Solver C</text>
+<line x1="274.0" y1="355" x2="370.0" y2="355" stroke="#0F9F8F" stroke-width="4" stroke-dasharray="1 11" stroke-linecap="round"/>
+<path d="M366.0,343 L384.0,355 L366.0,367 Z" fill="#0F9F8F"/>
+<text x="596.0" y="222" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#2563EB" text-anchor="middle" >A</text>
+<text x="672.0" y="222" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#E8743B" text-anchor="middle" >B</text>
+<text x="748.0" y="222" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#0F9F8F" text-anchor="middle" >C</text>
+<rect x="500.0" y="236" width="280" height="36" rx="10" fill="#F1F5F9"/>
+<text x="514.0" y="261" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#64748B" text-anchor="start" >P1</text>
+<text x="596.0" y="261" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >2e-9</text>
+<text x="672.0" y="261" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >5e-7</text>
+<text x="748.0" y="261" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >3e-4</text>
+<rect x="500.0" y="280" width="280" height="36" rx="10" fill="#F1F5F9"/>
+<text x="514.0" y="305" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#64748B" text-anchor="start" >P2</text>
+<text x="596.0" y="305" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >1e-11</text>
+<text x="672.0" y="305" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >8e-9</text>
+<text x="748.0" y="305" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >2e-9</text>
+<rect x="500.0" y="324" width="280" height="36" rx="10" fill="#F1F5F9"/>
+<text x="514.0" y="349" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#64748B" text-anchor="start" >P3</text>
+<text x="596.0" y="349" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >4e-8</text>
+<text x="672.0" y="349" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >6e-8</text>
+<text x="748.0" y="349" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#0F172A" text-anchor="middle" >9e-5</text>
+<text x="640.0" y="382" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#64748B" text-anchor="middle" >...</text>
+<line x1="910.0" y1="326.5" x2="1170.0" y2="326.5" stroke="#E3EAF2" stroke-width="1"/>
+<line x1="910.0" y1="289.0" x2="1170.0" y2="289.0" stroke="#E3EAF2" stroke-width="1"/>
+<line x1="910.0" y1="251.5" x2="1170.0" y2="251.5" stroke="#E3EAF2" stroke-width="1"/>
+<line x1="910.0" y1="214" x2="910.0" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="942.5" y1="214" x2="942.5" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="975.0" y1="214" x2="975.0" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="1007.5" y1="214" x2="1007.5" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="1040.0" y1="214" x2="1040.0" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="1072.5" y1="214" x2="1072.5" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="1105.0" y1="214" x2="1105.0" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="1137.5" y1="214" x2="1137.5" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="1170.0" y1="214" x2="1170.0" y2="364" stroke="#D5DEE9" stroke-width="1.2" opacity="0.9"/>
+<line x1="910.0" y1="364" x2="1170.0" y2="364" stroke="#B8C4D3" stroke-width="2" stroke-linecap="round"/>
+<line x1="910.0" y1="214" x2="910.0" y2="364" stroke="#B8C4D3" stroke-width="2" stroke-linecap="round"/>
+<path d="M910.0,358.6 H942.1 V353.3 H950.5 V347.9 H981.4 V342.6 H992.0 V337.2 H1018.3 V331.9 H1025.5 V326.5 H1028.5 V321.1 H1040.0 V315.8 H1049.4 V310.4 H1051.0 V305.1 H1051.2 V299.7 H1055.2 V294.4 H1067.3 V289.0 H1069.6 V283.6 H1076.7 V278.3 H1087.9 V272.9 H1090.3 V267.6 H1098.1 V262.2 H1100.1 V256.9 H1115.0 V251.5 H1124.2 V246.1 H1130.0 V240.8 H1133.3 V235.4 H1139.2 V230.1 H1150.5 V224.7 H1154.2 V219.4 H1156.7 V214.0 H1170.0" fill="none" stroke="#0F9F8F" stroke-width="3" stroke-dasharray="9 4 2 4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M910.0,364.0 H973.6 V358.6 H979.9 V353.3 H989.5 V347.9 H1003.6 V342.6 H1010.8 V337.2 H1017.1 V331.9 H1028.7 V326.5 H1029.9 V321.1 H1032.3 V315.8 H1036.4 V310.4 H1037.3 V305.1 H1043.6 V299.7 H1047.7 V294.4 H1060.7 V289.0 H1061.8 V283.6 H1063.4 V278.3 H1075.4 V272.9 H1075.9 V267.6 H1080.9 V262.2 H1083.7 V256.9 H1090.7 V251.5 H1090.7 V246.1 H1091.9 V240.8 H1101.6 V235.4 H1104.6 V230.1 H1107.6 V224.7 H1127.0 V219.4 H1148.8 V214.0 H1170.0" fill="none" stroke="#E8743B" stroke-width="3" stroke-dasharray="10 6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M910.0,353.3 H928.4 V347.9 H940.0 V342.6 H949.0 V337.2 H952.4 V331.9 H957.6 V326.5 H965.7 V321.1 H979.1 V315.8 H981.2 V310.4 H983.8 V305.1 H988.3 V299.7 H1004.8 V294.4 H1005.5 V289.0 H1008.2 V283.6 H1015.0 V278.3 H1017.3 V272.9 H1026.7 V267.6 H1034.8 V262.2 H1039.8 V256.9 H1046.6 V251.5 H1050.0 V246.1 H1050.5 V240.8 H1051.7 V235.4 H1080.5 V230.1 H1093.4 V224.7 H1104.5 V219.4 H1132.3 V214.0 H1170.0" fill="none" stroke="#2563EB" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
