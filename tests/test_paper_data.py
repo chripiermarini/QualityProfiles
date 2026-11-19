@@ -14,7 +14,9 @@ EXAMPLES = Path(__file__).resolve().parents[1] / "examples"
 
 @pytest.fixture(scope="module")
 def paper_data():
-    spec = importlib.util.spec_from_file_location("paper_data", EXAMPLES / "paper_data.py")
+    spec = importlib.util.spec_from_file_location(
+        "paper_data", EXAMPLES / "utils" / "paper_data.py"
+    )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -115,25 +117,27 @@ def test_dataset_without_problem_columns(paper_data, tmp_path, monkeypatch):
         paper_data.load("mine", n=100)
 
 
-@pytest.mark.parametrize(
-    ("script", "args"),
-    [
-        ("reproduce_paper_figures.py", []),
-        ("make_readme_figure.py", []),
-    ],
-)
-def test_example_scripts_run(script, args, tmp_path, monkeypatch):
-    """The example scripts work end to end (output redirected to a temporary folder)."""
+def _run_script(path: Path, monkeypatch, argv=()):
+    """Run a script as `python path` would: its own folder first on sys.path."""
     import runpy
 
-    monkeypatch.syspath_prepend(str(EXAMPLES))
-    if script == "reproduce_paper_figures.py":
-        monkeypatch.setattr(sys, "argv", [script, str(tmp_path)])
-        runpy.run_path(str(EXAMPLES / script), run_name="__main__")
-        assert len(list(tmp_path.glob("*.png"))) == 12
-    else:
-        module = runpy.run_path(str(EXAMPLES / script))
-        out = tmp_path / "figure.png"
-        module["main"].__globals__["OUT"] = out
-        module["main"]()
-        assert out.is_file()
+    monkeypatch.syspath_prepend(str(path.parent))
+    monkeypatch.setattr(sys, "argv", [str(path), *argv])
+    return runpy.run_path(str(path), run_name="__main__")
+
+
+def test_reproduce_paper_figures_runs(tmp_path, monkeypatch):
+    _run_script(EXAMPLES / "reproduce_paper_figures.py", monkeypatch, [str(tmp_path)])
+    assert len(list(tmp_path.glob("*.png"))) == 12
+
+
+def test_readme_figure_script_runs(tmp_path, monkeypatch):
+    import runpy
+
+    script = EXAMPLES / "utils" / "make_readme_figure.py"
+    monkeypatch.syspath_prepend(str(script.parent))
+    module = runpy.run_path(str(script))  # not as __main__: redirect the output first
+    out = tmp_path / "figure.png"
+    module["main"].__globals__["OUT"] = out
+    module["main"]()
+    assert out.is_file()

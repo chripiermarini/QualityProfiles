@@ -2,7 +2,7 @@
 
 Usage::
 
-    uv run python examples/make_readme_figure.py
+    uv run python examples/utils/make_readme_figure.py
 
 It writes ``docs/assets/readme_profiles.png``: the smooth CUTEst experiment of the
 paper (L-BFGS, CG+, TRON, CG_DESCENT on 166 problems) with ``r1 = 1`` and ``r1 = 5``.
@@ -18,7 +18,7 @@ from paper_data import load
 
 from quality_profiles import plot_quality_profiles, quality_profiles
 
-OUT = Path(__file__).resolve().parent.parent / "docs" / "assets" / "readme_profiles.png"
+OUT = Path(__file__).resolve().parents[2] / "docs" / "assets" / "readme_profiles.png"
 
 
 def main() -> None:

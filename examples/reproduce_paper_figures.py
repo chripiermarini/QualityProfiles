@@ -6,7 +6,7 @@ Usage::
 
 The result files in ``examples/data`` hold, for every test problem, the objective
 value at the starting point followed by the best value found by each solver (see
-``paper_data.py``). Figures are written as PNG files to ``output_dir`` (default:
+``utils/paper_data.py``). Figures are written as PNG files to ``output_dir`` (default:
 ``examples/figures``).
 
 Figure numbers follow arXiv:2607.16798 (v1). The last figures restrict the test sets
@@ -25,7 +25,7 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
-from paper_data import load
+from utils.paper_data import load
 
 from quality_profiles import plot_quality_profiles, quality_profiles
 

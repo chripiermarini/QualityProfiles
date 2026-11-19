@@ -32,7 +32,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from paper_data import DATA, dataset_names, load
+from utils.paper_data import DATA, dataset_names, load
 
 from quality_profiles import (
     plot_quality_profiles,

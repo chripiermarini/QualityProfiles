@@ -4,7 +4,7 @@ Each file has one row per test problem: optionally the problem name (``problem``
 its dimension (``n``), then the objective value at the starting point (``f0``), then one
 column per solver. The example scripts import this module::
 
-    from paper_data import load
+    from utils.paper_data import load  # from a script in examples/
 
     f0, f_solvers, names = load("cutest_smooth")            # all 166 problems
     f0, f_solvers, names = load("cutest_smooth", n=10000)   # only the n = 10000 instances
@@ -18,7 +18,7 @@ from pathlib import Path
 
 import numpy as np
 
-DATA = Path(__file__).resolve().parent / "data"
+DATA = Path(__file__).resolve().parent.parent / "data"
 
 __all__ = ["DATA", "dataset_names", "load", "problems"]
 

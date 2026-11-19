@@ -9,11 +9,11 @@ problem, with the columns:
   solver name.
 
 These files are not part of the installed package. They are read with
-[`examples/paper_data.py`](../paper_data.py), which is used by the example scripts and
+[`examples/utils/paper_data.py`](../utils/paper_data.py), which is used by the example scripts and
 the test suite:
 
 ```python
-from paper_data import load
+from utils.paper_data import load   # from a script in examples/
 
 f0, f_solvers, names = load("cutest_smooth")            # all 166 problems
 f0, f_solvers, names = load("cutest_smooth", n=10000)   # the 45 instances with n = 10000

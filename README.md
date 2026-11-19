@@ -32,7 +32,8 @@
   <a href="#api"><b>API</b></a> ·
   <a href="#the-papers-experiments"><b>Paper's experiments</b></a> ·
   <a href="docs/"><b>Documentation</b></a> ·
-  <a href="#citation"><b>Citation</b></a>
+  <a href="#citation"><b>Citation</b></a> ·
+  <a href="docs/CONTRIBUTING.md"><b>Contributing</b></a>
 </p>
 
 ---
@@ -177,7 +178,7 @@ Figure 12:
   <img src="docs/assets/plotly_legend_zoom.gif" alt="Hiding solvers from the legend and zooming on the high-accuracy range" width="85%">
 </p>
 
-The gallery is drawn by [`examples/make_readme_gallery.py`](examples/make_readme_gallery.py).
+The gallery is drawn by [`examples/utils/make_readme_gallery.py`](examples/utils/make_readme_gallery.py).
 
 ## What is computed
 
@@ -212,21 +213,13 @@ the properties proved in the paper and the handling of failures are described in
 
 ## API
 
-| Function / class | Description |
-| --- | --- |
-| `quality_profiles(f0, f_solvers, ...)` | Compute the profiles; returns a `QualityProfile`. |
-| `QualityProfile` | Sampled profiles, with `evaluate(levels)`, `area()` and `ranking()`. |
-| `plot_quality_profiles(profile, ...)` | Matplotlib step plot, optionally with a matplotlib or SciencePlots `style`. |
-| `plot_quality_profiles_interactive(profile, ...)` | Interactive Plotly figure (`[interactive]` extra). |
-| `split_matrix(tt)` | Split a MATLAB-style `P x (1+S)` results matrix into `f0` and `f_solvers`. |
-
 Every parameter, return value and error is documented in [**docs/api.md**](docs/api.md).
 
 ## The paper's experiments
 
 [`examples/data`](examples/data) contains the results published with the paper, one CSV
 file per experiment: the CUTEst problem and its dimension `n`, the starting value `f0`,
-then one column per solver. [`examples/paper_data.py`](examples/paper_data.py) loads
+then one column per solver. [`examples/utils/paper_data.py`](examples/utils/paper_data.py) loads
 them, also restricted to one problem dimension, e.g. `load("cutest_smooth", n=10000)`.
 
 <details>
@@ -284,9 +277,12 @@ If you use this package, please cite the paper (see [`CITATION.cff`](CITATION.cf
 }
 ```
 
-## Questions
+## Questions and contributions
 
-Open an [issue](https://github.com/chripiermarini/QualityProfiles/issues).
+Questions and contributions are very welcome. Feel free to open an
+[issue](https://github.com/chripiermarini/QualityProfiles/issues) for any question, bug
+report or idea, or to send a pull request following the
+[guidelines for contributing](docs/CONTRIBUTING.md).
 
 ## License
 

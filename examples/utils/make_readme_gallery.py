@@ -3,7 +3,7 @@
 The static images need the dev environment (``uv sync``). The Plotly screenshot and
 the animated GIFs also need Playwright and a local Google Chrome::
 
-    uv run --with playwright python examples/make_readme_gallery.py
+    uv run --with playwright python examples/utils/make_readme_gallery.py
 
 Use ``--static-only`` to skip everything that needs a browser.
 
@@ -36,7 +36,7 @@ from quality_profiles import (
     quality_profiles,
 )
 
-OUT = Path(__file__).resolve().parent.parent / "docs" / "assets"
+OUT = Path(__file__).resolve().parents[2] / "docs" / "assets"
 
 WIDTH, HEIGHT = 860, 420  # size of the Plotly figures, in pixels
 
@@ -148,7 +148,7 @@ NEEDS_BROWSER = """\
 The Plotly screenshot and the GIFs were not drawn: {reason}
 They need Playwright and a local Google Chrome. Run, from the repository root:
 
-    uv run --with playwright python examples/make_readme_gallery.py
+    uv run --with playwright python examples/utils/make_readme_gallery.py
 
 or pass --static-only to draw only the matplotlib images."""
 
