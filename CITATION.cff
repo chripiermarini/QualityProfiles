@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "quality-profiles: quality profiles for benchmarking optimization algorithms"
+version: 0.1.0
+license: MIT
+authors:
+  - family-names: Fasano
+    given-names: Giovanni
+  - family-names: Piermarini
+    given-names: Christian
+  - family-names: Roma
+    given-names: Massimo
+preferred-citation:
+  type: article
+  title: "Benchmarking Optimization Algorithms with Quality Profiles and Test Set Profiles"
+  authors:
+    - family-names: Fasano
+      given-names: Giovanni
+    - family-names: Piermarini
+      given-names: Christian
+    - family-names: Roma
+      given-names: Massimo
+  journal: "Mathematical Programming Computation"
+  year: 2026
+  notes: "Accepted. arXiv:2607.16798"
+  url: "https://arxiv.org/abs/2607.16798"
