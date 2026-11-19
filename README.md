@@ -284,6 +284,7 @@ If you use this package, please cite the paper (see [`CITATION.cff`](CITATION.cf
   author  = {Fasano, Giovanni and Piermarini, Christian and Roma, Massimo},
   journal = {Mathematical Programming Computation},
   note    = {Accepted. arXiv:2607.16798},
+  doi     = {10.48550/arXiv.2607.16798},
   year    = {2026}
 }
 ```
