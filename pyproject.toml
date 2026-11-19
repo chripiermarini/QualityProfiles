@@ -70,7 +70,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.sdist]
-include = ["src", "tests", "notebooks", "examples", "README.md", "LICENSE", "CITATION.cff", "pyproject.toml"]
+include = ["src", "tests", "notebooks", "examples", "docs", "README.md", "LICENSE", "CITATION.cff", "pyproject.toml"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/quality_profiles"]
