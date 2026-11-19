@@ -76,6 +76,17 @@ def test_ieee_style_uses_its_own_line_styles(profile):
     assert [line.get_linestyle() for line in ax.get_lines()] == ["-", "--", ":"]
 
 
+def test_short_style_cycle_never_draws_two_solvers_alike(rng):
+    pytest.importorskip("scienceplots")
+    f0 = rng.random(30)
+    many = quality_profiles(f0, f0[:, None] - rng.random((30, 7)), n_intervals=50)
+    ax = plot_quality_profiles(many, style=["science", "ieee"])  # ieee cycles 4 colors/styles
+    looks = {
+        (to_hex(line.get_color()), str(line._unscaled_dash_pattern)) for line in ax.get_lines()
+    }
+    assert len(looks) == 7
+
+
 def test_style_keeps_colors_per_solver(profile):
     pytest.importorskip("scienceplots")
     full = plot_quality_profiles(profile, style="science")

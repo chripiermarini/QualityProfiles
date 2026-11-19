@@ -79,6 +79,24 @@ def test_profiles_are_drawn_as_steps(profile):
     assert all(line.get_drawstyle() == "steps-post" for line in ax.get_lines())
 
 
+def test_outside_legend(profile):
+    ax = plot_quality_profiles(profile, legend_loc="outside right center")
+    assert ax.get_legend() is None
+    (legend,) = ax.figure.legends
+    assert [t.get_text() for t in legend.get_texts()] == list(profile.solver_names)
+
+
+def test_outside_legend_needs_layout_engine(profile):
+    _, ax = plt.subplots()
+    with pytest.raises(ValueError, match="layout engine"):
+        plot_quality_profiles(profile, ax, legend_loc="outside right center")
+
+
+def test_legend_lists_only_profiles(profile):
+    ax = plot_quality_profiles(profile, logscale=False)  # adds reference lines
+    assert len(ax.get_legend().get_texts()) == 3
+
+
 def test_default_colors():
     assert default_colors(3) == list(PALETTE[:3])
     assert default_colors(9)[8] == PALETTE[0]

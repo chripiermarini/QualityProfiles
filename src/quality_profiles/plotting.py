@@ -170,6 +170,9 @@ def plot_quality_profiles(
         Draw a legend with the solver names.
     legend_loc : str, default "best"
         Legend location, forwarded to :meth:`matplotlib.axes.Axes.legend`.
+        Locations starting with ``"outside"`` (e.g. ``"outside right center"``
+        or ``"outside lower center"``) place the legend next to the axes,
+        which helps with many solvers or narrow figures.
     title : str, optional
         Axes title.
     grid : bool, optional
@@ -265,9 +268,11 @@ def _draw(
         palette = colors
     if linestyles:
         styles = tuple(linestyles)
-    elif not themed and "linestyle" in cycle:
+    elif not themed and len(cycle.get("linestyle", ())) >= n:
         styles = tuple(cycle["linestyle"])
     else:
+        # Also when a style defines fewer line styles than solvers (e.g. "ieee" has
+        # four): repeating them would draw two solvers identically.
         styles = DEFAULT_LINESTYLES
     if linewidth is None:
         linewidth = 2.0 if themed else float(plt.rcParams["lines.linewidth"])
@@ -315,7 +320,7 @@ def _draw(
         if grid is not None:
             ax.grid(grid)
         if legend:
-            ax.legend(loc=cast(Any, legend_loc))
+            _add_legend(ax, profile_lines, legend_loc)
         return ax
 
     for line in profile_lines:
@@ -335,11 +340,14 @@ def _draw(
         ax.grid(True, which="major", color=_GRID, linewidth=0.8, zorder=0)
         ax.set_axisbelow(True)
     if legend:
-        leg = ax.legend(
-            loc=cast(Any, legend_loc),
+        outside = legend_loc.startswith("outside")
+        leg = _add_legend(
+            ax,
+            profile_lines,
+            legend_loc,
             fontsize=9.5,
             handlelength=3.2,
-            frameon=True,
+            frameon=not outside,
             facecolor="white",
             edgecolor="none",
             framealpha=0.85,
@@ -347,3 +355,20 @@ def _draw(
         for text in leg.get_texts():
             text.set_color(_INK)
     return ax
+
+
+def _add_legend(ax: Axes, lines: list[Any], loc: str, **kwargs: Any) -> Any:
+    """Legend inside the axes, or outside them for ``loc="outside ..."``.
+
+    Outside legends are figure legends; with a constrained layout, matplotlib
+    makes room for them next to the axes.
+    """
+    if loc.startswith("outside"):
+        fig = ax.get_figure()
+        if fig is None or fig.get_layout_engine() is None:
+            raise ValueError(
+                f"legend_loc={loc!r} needs a figure with a layout engine, "
+                "e.g. plt.subplots(layout='constrained'); leave ax=None to get one"
+            )
+        return fig.legend(handles=lines, loc=cast(Any, loc), **kwargs)
+    return ax.legend(handles=lines, loc=cast(Any, loc), **kwargs)
