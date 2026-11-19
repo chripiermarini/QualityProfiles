@@ -21,6 +21,7 @@ Examples
 from importlib.metadata import PackageNotFoundError, version
 
 from .core import QualityProfile, default_n_intervals, quality_profiles, split_matrix
+from .interactive import plot_quality_profiles_interactive
 from .plotting import PALETTE, default_colors, paper_colors, plot_quality_profiles
 
 try:
@@ -36,6 +37,7 @@ __all__ = [
     "default_n_intervals",
     "paper_colors",
     "plot_quality_profiles",
+    "plot_quality_profiles_interactive",
     "quality_profiles",
     "split_matrix",
 ]

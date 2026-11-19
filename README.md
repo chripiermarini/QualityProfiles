@@ -30,6 +30,14 @@ uv add quality-profiles
 
 Requirements: Python ≥ 3.10, NumPy and Matplotlib.
 
+Two optional extras add other ways to draw the profiles:
+
+```bash
+pip install "quality-profiles[science]"      # SciencePlots styles, for figures in papers
+pip install "quality-profiles[interactive]"  # Plotly, for interactive exploration
+pip install "quality-profiles[all]"          # both
+```
+
 ## Quick start
 
 For every test problem `p` you need the objective value at the common starting
@@ -56,6 +64,18 @@ plt.show()
 
 qp.evaluate([1e-1, 1e-3, 1e-6])  # fraction solved to 1, 3 and 6 orders of magnitude
 qp.ranking()                     # solvers sorted by area under the profile
+```
+
+For a figure in a paper, or for interactive exploration:
+
+```python
+ax = plot_quality_profiles(qp, style=["science", "ieee"])  # needs the [science] extra
+ax.figure.savefig("profiles.pdf")
+
+from quality_profiles import plot_quality_profiles_interactive
+fig = plot_quality_profiles_interactive(qp)            # needs the [interactive] extra
+fig.show()                                             # zoom, hover, hide solvers
+fig.write_html("profiles.html")
 ```
 
 See [`notebooks/quality_profiles_example.ipynb`](notebooks/quality_profiles_example.ipynb)
@@ -101,7 +121,8 @@ How to read a profile:
 | `QualityProfile.evaluate(levels)` | Exact profile values at arbitrary precision levels. |
 | `QualityProfile.area()` / `.ranking()` | Area under each profile, and solvers sorted by area. |
 | `QualityProfile["name"]` | Values of one solver. |
-| `plot_quality_profiles(profile, ax=None, *, logscale=True, ...)` | Matplotlib step plot. Colors and line styles follow the solver; `colors="paper"` uses the paper's red-to-blue colors. |
+| `plot_quality_profiles(profile, ax=None, *, logscale=True, style=None, ...)` | Matplotlib step plot. Colors and line styles follow the solver; `colors="paper"` uses the paper's red-to-blue colors. `style=` applies a matplotlib or SciencePlots style. |
+| `plot_quality_profiles_interactive(profile, *, logscale=True, ...)` | Interactive Plotly figure with zoom, hover values and legend toggling (`[interactive]` extra). |
 | `split_matrix(tt)` | Split a `P x (1+S)` matrix (`f0` column, then one column per solver), the layout of the MATLAB code. |
 | `default_n_intervals(r1)` | Default grid size, `floor(max(1000, 1000*r1, 1000/r1))`. |
 

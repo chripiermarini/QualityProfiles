@@ -45,6 +45,11 @@ dependencies = [
     "matplotlib>=3.7",
 ]
 
+[project.optional-dependencies]
+interactive = ["plotly>=5.18"]
+science = ["SciencePlots>=2.1"]
+all = ["plotly>=5.18", "SciencePlots>=2.1"]
+
 [project.urls]
 Paper = "https://arxiv.org/abs/2607.16798"
 "MATLAB code" = "https://github.com/fasano-g/Quality-Profiles"
@@ -57,6 +62,8 @@ dev = [
     "mypy>=1.11",
     "nbmake>=1.5",
     "ipykernel>=6.29",
+    "plotly>=5.18",
+    "SciencePlots>=2.1",
 ]
 
 [tool.hatch.build.targets.sdist]
@@ -101,5 +108,5 @@ warn_unused_ignores = true
 files = ["src"]
 
 [[tool.mypy.overrides]]
-module = ["matplotlib.*"]
+module = ["matplotlib.*", "plotly.*", "scienceplots"]
 ignore_missing_imports = true
