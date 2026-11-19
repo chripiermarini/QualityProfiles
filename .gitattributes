@@ -1,3 +1,8 @@
 * text=auto eol=lf
 *.png binary
 *.pdf binary
+*.gif binary
+
+# GitHub language statistics: the example notebook is documentation, not source code
+# (its embedded figures would otherwise make the repository look like a notebook project).
+*.ipynb linguist-documentation
