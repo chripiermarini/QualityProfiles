@@ -18,7 +18,7 @@
   <a href="pyproject.toml"><img alt="Python" src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?logo=python&logoColor=white"/></a>
   <a href=".github/workflows/ci.yml"><img alt="Platform" src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey"/></a>
   <br>
-  <a href="https://pypi.org/project/quality-profiles/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/quality-profiles?logo=pypi&logoColor=white"/></a>
+  <a href="https://pypi.org/project/quality-profiles/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/quality-profiles?logo=pypi&logoColor=white&cacheSeconds=3600"/></a>
   <a href="https://pypi.org/project/quality-profiles/"><img alt="PyPI Downloads" src="https://img.shields.io/pypi/dm/quality-profiles?label=PyPI%20downloads"/></a>
   <a href="https://anaconda.org/conda-forge/quality-profiles"><img alt="Conda version" src="https://img.shields.io/conda/vn/conda-forge/quality-profiles?logo=anaconda&logoColor=white"/></a>
   <a href="https://anaconda.org/conda-forge/quality-profiles"><img alt="Conda Downloads" src="https://img.shields.io/conda/dn/conda-forge/quality-profiles?label=conda%20downloads"/></a>
