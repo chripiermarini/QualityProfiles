@@ -153,12 +153,29 @@ def open_figure(browser, fig, tmp: Path, scale: float = 1):
     return page, chart, plot
 
 
+NEEDS_BROWSER = """\
+The Plotly screenshot and the GIFs were not drawn: {reason}
+They need Playwright and a local Google Chrome. Run, from the repository root:
+
+    uv run --with playwright python examples/make_readme_gallery.py
+
+or pass --static-only to draw only the matplotlib images."""
+
+
 def browser_images() -> None:
-    from playwright.sync_api import sync_playwright
+    try:
+        from playwright.sync_api import Error as PlaywrightError
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        raise SystemExit(NEEDS_BROWSER.format(reason="Playwright is not installed.")) from None
 
     with tempfile.TemporaryDirectory() as tmpdir, sync_playwright() as p:
         tmp = Path(tmpdir)
-        browser = p.chromium.launch(channel="chrome", headless=True)
+        try:
+            browser = p.chromium.launch(channel="chrome", headless=True)
+        except PlaywrightError as error:
+            reason = f"Google Chrome could not be started ({str(error).splitlines()[0]})."
+            raise SystemExit(NEEDS_BROWSER.format(reason=reason)) from None
 
         # Static screenshot: narrower and at twice the resolution, so that it matches the
         # proportions of the matplotlib images next to it in the README.

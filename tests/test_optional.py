@@ -70,6 +70,16 @@ def test_science_style(profile):
     assert len(patterns) == 3
 
 
+def test_loading_scienceplots_shows_no_deprecation_warnings(profile, monkeypatch):
+    pytest.importorskip("scienceplots")
+    import sys
+
+    # force a fresh import, as in a new session; warnings are errors in this test suite
+    for name in [m for m in sys.modules if m == "scienceplots" or m.startswith("scienceplots.")]:
+        monkeypatch.delitem(sys.modules, name)
+    plot_quality_profiles(profile, style="science")
+
+
 def test_ieee_style_uses_its_own_line_styles(profile):
     pytest.importorskip("scienceplots")
     ax = plot_quality_profiles(profile, style=["science", "ieee"])

@@ -90,9 +90,12 @@ def main() -> None:
 
         pngs = []
         for suffix, style in [("science", "science"), ("science_ieee", ["science", "ieee"])]:
-            # a column-wide figure has no room for many entries inside the axes
-            loc = "outside right center" if len(names) > 4 else "best"
-            ax = plot_quality_profiles(qp, style=style, logscale=logscale, legend_loc=loc)
+            # SciencePlots figures are one journal column wide: keep the legend outside
+            ax = plot_quality_profiles(
+                qp, style=style, logscale=logscale, legend_loc="outside right center"
+            )
+            # widen the figure for the legend, so that the axes keep about a column's width
+            ax.figure.set_size_inches(5.4, ax.figure.get_figheight())
             file = OUT / f"{name}_{suffix}.png"
             ax.figure.savefig(file, dpi=200)
             plt.close(ax.figure)

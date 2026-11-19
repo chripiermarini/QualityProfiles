@@ -51,6 +51,12 @@ def load(name: str):
     return data[:, 0], data[:, 1:], names
 
 
+def widened(fig):
+    """Widen a column-wide figure for its outside legend, so the axes keep their width."""
+    fig.set_size_inches(5.4, fig.get_figheight())
+    return fig
+
+
 def png(fig, dpi: int) -> str:
     """Encode a matplotlib figure as an <img> tag."""
     buffer = io.BytesIO()
@@ -73,11 +79,16 @@ def main() -> None:
     f0, f_solvers, names = load(args.dataset)
     qp = quality_profiles(f0, f_solvers, solver_names=names, r1=args.r1, r2=args.r2)
     title = f"{args.dataset}: r1 = {args.r1:g}, r2 = {args.r2:g}"
-    loc = "outside right center" if len(names) > 4 else "best"
+    # The default figure is wide enough for a legend inside when there are few solvers;
+    # the SciencePlots figures are one journal column wide, so their legend goes outside.
+    outside = "outside right center"
+    loc = outside if len(names) > 4 else "best"
 
     default = png(plot_quality_profiles(qp, title=title, legend_loc=loc).figure, dpi=130)
-    science = png(plot_quality_profiles(qp, style="science", legend_loc=loc).figure, dpi=220)
-    ieee = png(plot_quality_profiles(qp, style=["science", "ieee"], legend_loc=loc).figure, dpi=220)
+    science, ieee = (
+        png(widened(plot_quality_profiles(qp, style=style, legend_loc=outside).figure), dpi=220)
+        for style in ("science", ["science", "ieee"])
+    )
     interactive = plot_quality_profiles_interactive(qp, title=title).to_html(
         full_html=False, include_plotlyjs=True
     )

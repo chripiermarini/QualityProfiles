@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import shutil
+import warnings
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any, Literal, cast
 
@@ -232,7 +233,13 @@ def _resolve_style(style: str | Sequence[str] | None) -> list[str] | None:
     names = [style] if isinstance(style, str) else [str(n) for n in style]
     if any(n in SCIENCEPLOTS_STYLES for n in names):
         try:
-            import scienceplots  # noqa: F401  (registers the styles with matplotlib)
+            # SciencePlots calls matplotlib helpers deprecated in matplotlib 3.11 while it
+            # registers its styles; hide those warnings, which are not the user's concern.
+            with warnings.catch_warnings():
+                warnings.filterwarnings(
+                    "ignore", category=DeprecationWarning, module="scienceplots"
+                )
+                import scienceplots  # noqa: F401  (registers the styles with matplotlib)
         except ImportError:
             raise ImportError(
                 "the SciencePlots styles need the 'SciencePlots' package: "

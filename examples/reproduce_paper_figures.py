@@ -68,10 +68,18 @@ def main(out_dir: Path) -> None:
 
     for fig_id, dataset in DFO_FIGURES:
         f0, fs, names = load(dataset)
-        fig, axes = plt.subplots(3, 1, figsize=(8, 13), layout="constrained")
-        for ax, r1 in zip(axes, (5, 1, 0.2), strict=True):
+        fig, axes = plt.subplots(3, 1, figsize=(9, 13), layout="constrained")
+        for k, (ax, r1) in enumerate(zip(axes, (5, 1, 0.2), strict=True)):
             qp = quality_profiles(f0, fs, solver_names=names, r1=r1)
-            plot_quality_profiles(qp, ax, title=f"{dataset}: r1={r1}, r2=1")
+            # one legend for the three panels, next to them: with seven solvers a
+            # legend inside the axes covers the curves
+            plot_quality_profiles(
+                qp,
+                ax,
+                title=f"{dataset}: r1={r1}, r2=1",
+                legend=k == 0,
+                legend_loc="outside right center",
+            )
         fig.savefig(out_dir / f"{fig_id}_{dataset}.png", dpi=150)
         plt.close(fig)
         print(f"{fig_id}: written")
