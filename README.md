@@ -19,10 +19,7 @@
   <a href=".github/workflows/ci.yml"><img alt="Platform" src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey"/></a>
   <br>
   <a href="https://pypi.org/project/quality-profiles/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/quality-profiles?logo=pypi&logoColor=white&cacheSeconds=3600"/></a>
-  <a href="https://pypi.org/project/quality-profiles/"><img alt="PyPI Downloads" src="https://img.shields.io/pypi/dm/quality-profiles?label=PyPI%20downloads"/></a>
-  <a href="https://anaconda.org/conda-forge/quality-profiles"><img alt="Conda version" src="https://img.shields.io/conda/vn/conda-forge/quality-profiles?logo=anaconda&logoColor=white"/></a>
-  <a href="https://anaconda.org/conda-forge/quality-profiles"><img alt="Conda Downloads" src="https://img.shields.io/conda/dn/conda-forge/quality-profiles?label=conda%20downloads"/></a>
-</p>
+  <a href="https://pypi.org/project/quality-profiles/"><img alt="PyPI Downloads" src="https://img.shields.io/pypi/dm/quality-profiles?label=PyPI%20downloads"/></a></p>
 
 <p align="center">
   <a href="#installation"><b>Installation</b></a> ·
