@@ -25,11 +25,11 @@ Let $f_L^{(p)}$ be a reference value for problem $p$. By default it is the best 
 found by any solver, $f_L^{(p)} = \min_{s \in S} f_s^{(p)}$. The **(weak) quality
 profile** of solver $s$ is (equation 2.1)
 
-$$
+```math
 Q_s(\tau) = \frac{1}{|P|}\,\mathrm{size}\Big\{p \in P :
 f_s^{(p)} - f_L^{(p)} \le \tau\,\big(f^{(p)}(x_0^{(p)}) - f_L^{(p)}\big)\Big\},
 \qquad \tau \in [0, 1].
-$$
+```
 
 $Q_s(\tau)$ is the fraction of test problems on which solver $s$ reduced the gap between
 the starting value and the reference value by at least a factor $\tau$. Values of $\tau$
@@ -65,9 +65,9 @@ solvers.
 Solvers often have close profiles, especially near $\tau = 0$ or $\tau = 1$
 (Observation 2.5). The package therefore computes the scaled profiles (equation 2.3)
 
-$$
+```math
 \big[Q_s(\tau^{r_1})\big]^{r_2}, \qquad \tau \in [0, 1],
-$$
+```
 
 with positive exponents `r1` and `r2`:
 
@@ -88,9 +88,9 @@ $\tau_k = k / n$, $k = 0, \dots, n$, and evaluated at the precision levels
 $\tau_k^{r_1}$, which are the abscissae of the plot. When $r_1 \neq 1$ these levels are no
 longer equally spaced, so the default number of intervals grows with `r1`:
 
-$$
+```math
 n = \big\lfloor \max(1000,\ 1000\, r_1,\ 1000 / r_1) \big\rfloor .
-$$
+```
 
 With `r1 = 1` the smallest positive precision level is $10^{-3}$. With `r1 = 5` it is
 $(1/5000)^5 \approx 3 \cdot 10^{-19}$, and with `r1 = 10` it is $10^{-40}$. A larger
@@ -135,9 +135,9 @@ The area under a profile summarizes it with one number in $[0, 1]$ (Observation 
 the larger the area, the better the solver. The package computes it with the trapezoidal
 rule with respect to the uniform parameter $\tau$:
 
-$$
+```math
 A_s = \int_0^1 \big[Q_s(\tau^{r_1})\big]^{r_2}\, d\tau .
-$$
+```
 
 Because the integral is taken in $\tau$, a larger `r1` gives more weight to high-accuracy
 levels. The ranking by area can therefore change with `r1`; on the smooth CUTEst
