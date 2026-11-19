@@ -1,6 +1,6 @@
 # What is computed
 
-This page describes the quantities computed by `quality-profiles` and how to read them.
+This page describes the quantities computed by Quality Profiles and how to read them.
 The method is introduced in G. Fasano, C. Piermarini, M. Roma, *Benchmarking
 Optimization Algorithms with Quality Profiles and Test Set Profiles*, Mathematical
 Programming Computation (accepted), [arXiv:2607.16798](https://arxiv.org/abs/2607.16798).

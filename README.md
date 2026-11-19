@@ -1,4 +1,4 @@
-<h1 align="center">quality-profiles</h1>
+<h1 align="center">Quality Profiles</h1>
 
 <p align="center"><i>Benchmark optimization solvers by the quality of the solutions they return.</i></p>
 
@@ -39,7 +39,7 @@ a common starting point and a reference value, over the whole range of precision
 They need no a priori thresholds, and they handle failures and solvers that converge to
 different local minimizers, so no test problem has to be excluded.
 
-`quality-profiles` implements the method of
+This package implements the method of
 
 > G. Fasano, C. Piermarini, M. Roma.
 > *Benchmarking Optimization Algorithms with Quality Profiles and Test Set Profiles.*
@@ -59,7 +59,8 @@ grid it gives exactly the same values, and it runs much faster: 20,000 problems 
 
 ## Installation
 
-From PyPI:
+Quality Profiles is published on PyPI as `quality-profiles` and imported in Python as
+`quality_profiles`. From PyPI:
 
 ```bash
 pip install quality-profiles                    # NumPy and Matplotlib only
