@@ -59,7 +59,7 @@ qp.ranking()                     # solvers sorted by area under the profile
 ```
 
 See [`notebooks/quality_profiles_example.ipynb`](notebooks/quality_profiles_example.ipynb)
-for a complete walk-through on a small benchmark.
+for a walk-through of the paper's examples on the published results.
 
 ## What is computed
 
@@ -101,7 +101,7 @@ How to read a profile:
 | `QualityProfile.evaluate(levels)` | Exact profile values at arbitrary precision levels. |
 | `QualityProfile.area()` / `.ranking()` | Area under each profile, and solvers sorted by area. |
 | `QualityProfile["name"]` | Values of one solver. |
-| `plot_quality_profiles(profile, ax=None, *, logscale=True, ...)` | Matplotlib plot in the style of the paper. |
+| `plot_quality_profiles(profile, ax=None, *, logscale=True, ...)` | Matplotlib step plot. Colors and line styles follow the solver; `colors="paper"` uses the paper's red-to-blue colors. |
 | `split_matrix(tt)` | Split a `P x (1+S)` matrix (`f0` column, then one column per solver), the layout of the MATLAB code. |
 | `default_n_intervals(r1)` | Default grid size, `floor(max(1000, 1000*r1, 1000/r1))`. |
 

@@ -3,8 +3,15 @@ from __future__ import annotations
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
+from matplotlib.colors import to_hex
 
-from quality_profiles import default_colors, plot_quality_profiles, quality_profiles
+from quality_profiles import (
+    PALETTE,
+    default_colors,
+    paper_colors,
+    plot_quality_profiles,
+    quality_profiles,
+)
 
 
 @pytest.fixture
@@ -25,7 +32,7 @@ def test_log_plot(profile):
     # tau = 0 is skipped on a log axis
     assert all(len(line.get_xdata()) == 100 for line in ax.get_lines())
     assert [t.get_text() for t in ax.get_legend().get_texts()] == list(profile.solver_names)
-    assert ax.get_title() == "QP"
+    assert ax.get_title(loc="left") == "QP"
 
 
 def test_linear_plot_draws_reference_lines(profile):
@@ -50,11 +57,38 @@ def test_custom_styles(profile):
     assert {line.get_linestyle() for line in ax.get_lines()} == {"-"}
     with pytest.raises(ValueError, match="colors"):
         plot_quality_profiles(profile, colors=["k"])
+    with pytest.raises(ValueError, match="color scheme"):
+        plot_quality_profiles(profile, colors="rainbow")
+
+
+def test_colors_follow_the_solver_not_its_position(profile):
+    full = plot_quality_profiles(profile)
+    _, ax = plt.subplots()
+    subset = plot_quality_profiles(profile, ax, solvers=["Solver-3"])
+    assert to_hex(subset.get_lines()[0].get_color()) == to_hex(full.get_lines()[2].get_color())
+    assert subset.get_lines()[0].get_linestyle() == full.get_lines()[2].get_linestyle()
+
+
+def test_paper_colors_option(profile):
+    ax = plot_quality_profiles(profile, colors="paper")
+    assert [line.get_color() for line in ax.get_lines()] == paper_colors(3)
+
+
+def test_profiles_are_drawn_as_steps(profile):
+    ax = plot_quality_profiles(profile)
+    assert all(line.get_drawstyle() == "steps-post" for line in ax.get_lines())
 
 
 def test_default_colors():
-    colors = default_colors(3)
+    assert default_colors(3) == list(PALETTE[:3])
+    assert default_colors(9)[8] == PALETTE[0]
+    with pytest.raises(ValueError):
+        default_colors(0)
+
+
+def test_paper_colors():
+    colors = paper_colors(3)
     assert colors[0] == (1.0, 0.0, 0.0) and colors[-1] == (0.0, 0.0, 1.0)
     assert np.allclose(colors[1], (0.5, 0.0, 0.5))
     with pytest.raises(ValueError):
-        default_colors(0)
+        paper_colors(0)

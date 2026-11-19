@@ -21,7 +21,7 @@ Examples
 from importlib.metadata import PackageNotFoundError, version
 
 from .core import QualityProfile, default_n_intervals, quality_profiles, split_matrix
-from .plotting import default_colors, plot_quality_profiles
+from .plotting import PALETTE, default_colors, paper_colors, plot_quality_profiles
 
 try:
     __version__ = version("quality-profiles")
@@ -29,10 +29,12 @@ except PackageNotFoundError:  # pragma: no cover - running from a source tree
     __version__ = "0.0.0"
 
 __all__ = [
+    "PALETTE",
     "QualityProfile",
     "__version__",
     "default_colors",
     "default_n_intervals",
+    "paper_colors",
     "plot_quality_profiles",
     "quality_profiles",
     "split_matrix",
