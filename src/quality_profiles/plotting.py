@@ -150,7 +150,7 @@ def plot_quality_profiles(
     import matplotlib.pyplot as plt
 
     if ax is None:
-        _, ax = plt.subplots(figsize=(7.5, 4.8), layout="constrained")
+        _, ax = plt.subplots(figsize=(6.4, 4.0), layout="constrained")
 
     n = profile.n_solvers
     columns = list(range(n)) if solvers is None else [profile._column(s) for s in solvers]
