@@ -206,7 +206,9 @@ Every parameter, return value and error is documented in [**docs/api.md**](docs/
 ## The paper's experiments
 
 [`examples/data`](examples/data) contains the results published with the paper, one CSV
-file per experiment: the starting value `f0`, then one column per solver.
+file per experiment: the CUTEst problem and its dimension `n`, the starting value `f0`,
+then one column per solver. [`examples/paper_data.py`](examples/paper_data.py) loads
+them, also restricted to one problem dimension, e.g. `load("cutest_smooth", n=10000)`.
 
 <details>
 <summary><b>Datasets</b></summary>
@@ -225,8 +227,8 @@ file per experiment: the starting value `f0`, then one column per solver.
 
 </div>
 
-Where the data come from, and one correction made to the MATLAB files, is described in
-[`examples/data/README.md`](examples/data/README.md).
+Where the data come from, one correction made to the MATLAB files, and two known issues
+in the original data are described in [`examples/data/README.md`](examples/data/README.md).
 
 </details>
 

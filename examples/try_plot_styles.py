@@ -32,7 +32,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import numpy as np
+from paper_data import DATA, dataset_names, load
 
 from quality_profiles import (
     plot_quality_profiles,
@@ -40,20 +40,11 @@ from quality_profiles import (
     quality_profiles,
 )
 
-HERE = Path(__file__).resolve().parent
-DATA = HERE / "data"
-OUT = HERE / "figures" / "styles"
-
-
-def load(name: str):
-    path = DATA / f"{name}.csv"
-    names = path.read_text(encoding="utf-8").splitlines()[0].split(",")[1:]
-    data = np.loadtxt(path, delimiter=",", skiprows=1)
-    return data[:, 0], data[:, 1:], names
+OUT = Path(__file__).resolve().parent / "figures" / "styles"
 
 
 def main() -> None:
-    available = sorted(p.stem for p in DATA.glob("*.csv"))
+    available = dataset_names()
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )

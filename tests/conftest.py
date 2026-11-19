@@ -51,10 +51,12 @@ def reference_loop(f0, fs, r1=1.0, r2=1.0, strong=False, n_intervals=None, preci
 
 
 def load_csv(name):
+    """Return (f0, f_solvers, solver_names); optional problem/n columns come before f0."""
     path = DATA_DIR / f"{name}.csv"
     header = path.read_text(encoding="utf-8").splitlines()[0].split(",")
-    data = np.loadtxt(path, delimiter=",", skiprows=1)
-    return data[:, 0], data[:, 1:], header[1:]
+    start = header.index("f0")
+    data = np.loadtxt(path, delimiter=",", skiprows=1, usecols=range(start, len(header)))
+    return data[:, 0], data[:, 1:], header[start + 1 :]
 
 
 @pytest.fixture
