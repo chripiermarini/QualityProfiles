@@ -25,16 +25,28 @@ def test_matches_reference_loop_on_random_data(random_problem, r1, r2, strong):
     f0, fs = random_problem
     fs = fs.copy()
     fs[::7, 1] = np.nan  # some failures
-    qp = quality_profiles(f0, fs, r1=r1, r2=r2, strong=strong, n_intervals=200)
+    qp = assert_same_as_reference(f0, fs, r1=r1, r2=r2, strong=strong, n_intervals=200)
     # The grid follows the MATLAB formula up to rounding: vectorized and scalar
     # power functions may differ in the last bit, depending on the CPU.
     tau_ref, _ = reference_loop(f0, fs, r1=r1, r2=r2, strong=strong, n_intervals=200)
     np.testing.assert_allclose(qp.precision, tau_ref, rtol=1e-15, atol=0)
-    # On the same grid, every counting decision is identical, bit for bit.
-    _, q_ref = reference_loop(
-        f0, fs, r1=r1, r2=r2, strong=strong, n_intervals=200, precision=qp.precision
-    )
-    np.testing.assert_array_equal(qp.values, q_ref)
+
+
+def assert_same_as_reference(f0, fs, solver_names=None, **options):
+    """Compare quality_profiles with the reference loop, on the package's own grid.
+
+    The counting decisions must be identical, bit for bit: with ``r2 = 1`` the values
+    are the fractions of problems solved. Raising them to ``r2`` may differ in the
+    last bit between numpy's vectorized power and Python's scalar one (for instance on
+    CPUs with SIMD instructions), so the scaled values are compared up to rounding.
+    Returns the profile computed with the given options.
+    """
+    qp = quality_profiles(f0, fs, solver_names=solver_names, **options)
+    fractions = quality_profiles(f0, fs, **{**options, "r2": 1}).values
+    _, fractions_ref = reference_loop(f0, fs, **{**options, "r2": 1}, precision=qp.precision)
+    np.testing.assert_array_equal(fractions, fractions_ref)
+    np.testing.assert_allclose(qp.values, fractions_ref ** options.get("r2", 1), rtol=1e-15, atol=0)
+    return qp
 
 
 @pytest.mark.parametrize(
@@ -50,9 +62,7 @@ def test_matches_reference_loop_on_random_data(random_problem, r1, r2, strong):
 def test_matches_reference_loop_on_paper_data(name, r1, r2):
     f0, fs, names = load_csv(name)
     n = 300
-    qp = quality_profiles(f0, fs, solver_names=names, r1=r1, r2=r2, n_intervals=n)
-    _, q_ref = reference_loop(f0, fs, r1=r1, r2=r2, n_intervals=n, precision=qp.precision)
-    np.testing.assert_array_equal(qp.values, q_ref)
+    qp = assert_same_as_reference(f0, fs, solver_names=names, r1=r1, r2=r2, n_intervals=n)
     assert qp.solver_names == tuple(names)
 
 
