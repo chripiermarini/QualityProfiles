@@ -148,6 +148,15 @@ uv run python examples/reproduce_paper_figures.py
 
 See [`examples/data/README.md`](examples/data/README.md) for a description of each file.
 
+Two more scripts show the optional plot styles on the same data (they need the `[all]`
+extra, which the development environment already includes):
+
+```bash
+uv run python examples/compare_plot_styles.py               # one figure, four looks
+uv run python examples/try_plot_styles.py --r1 5             # every dataset, SciencePlots and Plotly
+uv run python examples/try_plot_styles.py --help             # all options
+```
+
 ## Development
 
 The project uses [uv](https://docs.astral.sh/uv/).
