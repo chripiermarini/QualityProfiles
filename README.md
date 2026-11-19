@@ -265,6 +265,15 @@ uv build                         # build the sdist and the wheel into dist/
 The tests check every result against a line-by-line port of the MATLAB algorithm, and
 check the properties proved in the paper.
 
+## Authors
+
+Quality Profiles is developed and maintained by **Christian Piermarini**
+(Sapienza University of Rome).
+
+Collaborators: **Giovanni Fasano** (Ca' Foscari University of Venice) and
+**Massimo Roma** (Sapienza University of Rome), co-authors of the paper that introduces
+the method.
+
 ## Citation
 
 If you use this package, please cite the paper (see [`CITATION.cff`](CITATION.cff)):

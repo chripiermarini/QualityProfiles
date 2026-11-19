@@ -5,12 +5,8 @@ version: 1.0.0
 license: MIT
 repository-code: "https://github.com/chripiermarini/QualityProfiles"
 authors:
-  - family-names: Fasano
-    given-names: Giovanni
   - family-names: Piermarini
     given-names: Christian
-  - family-names: Roma
-    given-names: Massimo
 preferred-citation:
   type: article
   title: "Benchmarking Optimization Algorithms with Quality Profiles and Test Set Profiles"
