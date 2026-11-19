@@ -156,6 +156,29 @@ def test_step_points_is_exact_and_small(rng):
     assert short[0].size == 2
 
 
+def test_interactive_hover_shows_every_solver(profile):
+    pytest.importorskip("plotly")
+    fig = plot_quality_profiles_interactive(profile)
+    # the curves are thinned, so hover must not depend on a point being nearby
+    assert fig.layout.hovermode == "x unified"
+    assert fig.layout.hoverdistance == -1
+
+
+def test_nearest_point_of_a_thinned_curve_has_the_step_value(profile):
+    # What hoverdistance=-1 relies on: for any grid abscissa, the retained point
+    # nearest to it (in plot coordinates) carries the profile value there, up to
+    # one grid cell around each jump.
+    x = np.log10(profile.precision[1:])
+    for s in range(profile.n_solvers):
+        y = profile.values[1:, s]
+        xs, ys = step_points(x, y)
+        nearest = ys[np.abs(xs[None, :] - x[:, None]).argmin(axis=1)]
+        jump = np.flatnonzero(np.diff(y)) + 1
+        near_jump = np.zeros(x.size, dtype=bool)
+        near_jump[np.clip(np.concatenate([jump - 1, jump]), 0, x.size - 1)] = True
+        np.testing.assert_array_equal(nearest[~near_jump], y[~near_jump])
+
+
 def test_interactive_linear_with_reference_lines(profile):
     pytest.importorskip("plotly")
     fig = plot_quality_profiles_interactive(profile, logscale=False)

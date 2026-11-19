@@ -166,6 +166,10 @@ def plot_quality_profiles_interactive(
         title={"text": title, "x": 0.01, "font": {"size": 15, "color": _INK}} if title else None,
         margin={"l": 60, "r": 20, "t": 50 if title else 20, "b": 50},
         hovermode="x unified",
+        # Each curve keeps only its jump points, so a long flat step can be far from the
+        # cursor: always take the nearest point of every curve. Both ends of a flat step
+        # carry the same value, so the hovered value is the value of the step.
+        hoverdistance=-1,
         font={"color": _INK},
         legend={"x": 1.02, "y": 1.0, "xanchor": "left", "yanchor": "top"},
         xaxis=xaxis,

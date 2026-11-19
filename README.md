@@ -23,6 +23,7 @@
 <p align="center">
   <a href="#installation"><b>Installation</b></a> ·
   <a href="#quick-start"><b>Quick start</b></a> ·
+  <a href="#plot-styles"><b>Plot styles</b></a> ·
   <a href="#what-is-computed"><b>What is computed</b></a> ·
   <a href="#api"><b>API</b></a> ·
   <a href="#the-papers-experiments"><b>Paper's experiments</b></a> ·
@@ -124,6 +125,54 @@ fig.write_html("profiles.html")
 
 The notebook [`notebooks/quality_profiles_example.ipynb`](notebooks/quality_profiles_example.ipynb)
 walks through the paper's examples on the published results.
+
+## Plot styles
+
+The same profiles (Figure 5 of the paper) in the three ways the package can draw them.
+
+<table>
+<tr>
+<td width="50%" align="center">
+  <img src="docs/assets/style_default.png" alt="Default matplotlib style" width="100%"><br>
+  <b>Default</b><br><code>plot_quality_profiles(qp)</code>
+</td>
+<td width="50%" align="center">
+  <img src="docs/assets/style_plotly.png" alt="Interactive Plotly figure" width="100%"><br>
+  <b>Interactive (Plotly)</b><br><code>plot_quality_profiles_interactive(qp)</code>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+  <img src="docs/assets/style_science.png" alt="SciencePlots science style" width="85%"><br>
+  <b>SciencePlots</b>, one journal column<br><code>plot_quality_profiles(qp, style="science")</code>
+</td>
+<td width="50%" align="center">
+  <img src="docs/assets/style_science_ieee.png" alt="SciencePlots science and ieee styles" width="85%"><br>
+  <b>SciencePlots + IEEE</b>, works in black and white<br><code>style=["science", "ieee"]</code>
+</td>
+</tr>
+</table>
+
+The matplotlib figures can be saved as PDF, SVG or PNG; for a paper, prefer PDF. The
+Plotly figure is saved as an interactive HTML page with `fig.write_html(...)`.
+
+### Interactive figures
+
+Hovering shows the value of every solver at the precision level under the cursor:
+
+<p align="center">
+  <img src="docs/assets/plotly_hover.gif" alt="Moving the cursor along the quality profiles shows the value of every solver" width="85%">
+</p>
+
+With many solvers, click a name in the legend to hide it, and drag a box to zoom; a
+double-click goes back to the full view. Here, on the seven derivative-free solvers of
+Figure 12:
+
+<p align="center">
+  <img src="docs/assets/plotly_legend_zoom.gif" alt="Hiding solvers from the legend and zooming on the high-accuracy range" width="85%">
+</p>
+
+The gallery is drawn by [`examples/make_readme_gallery.py`](examples/make_readme_gallery.py).
 
 ## What is computed
 
