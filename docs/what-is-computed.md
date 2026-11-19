@@ -96,6 +96,12 @@ With `r1 = 1` the smallest positive precision level is $10^{-3}$. With `r1 = 5` 
 $(1/5000)^5 \approx 3 \cdot 10^{-19}$, and with `r1 = 10` it is $10^{-40}$. A larger
 `r1` therefore lets the plot reach higher accuracy.
 
+The automatic grid is limited to $10^6$ intervals (`MAX_DEFAULT_INTERVALS`), which is
+reached for `r1 = 1000` or `r1 = 0.001`. For more extreme values, `quality_profiles`
+asks for an explicit `n_intervals` instead of silently allocating a huge grid. An
+explicit `n_intervals` is never limited. On a logarithmic axis, the precision levels
+that underflow to 0 for a very large `r1` are not drawn.
+
 The sampling only decides where the curves are drawn: `QualityProfile.evaluate`
 computes the profiles exactly at any precision level, without interpolation.
 

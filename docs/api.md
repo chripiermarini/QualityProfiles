@@ -40,14 +40,15 @@ Compute the quality profiles $[Q_s(\tau^{r_1})]^{r_2}$ of a set of solvers.
 | `r2` | float > 0 | `1.0` | Ordinate scaling. `r2 > 1` stretches the ordinate near 0, `r2 < 1` near 1. |
 | `strong` | bool | `False` | Compute strong profiles: `f0` is replaced by the worst value found by any solver. |
 | `f_ref` | array, shape `(P,)` | best value of any solver | Reference values $f_L^{(p)}$. Values that do not depend on the solvers make each profile independent of the others. |
-| `n_intervals` | int > 0 | [`default_n_intervals(r1)`](#default_n_intervals) | Number of equal intervals sampling $\tau \in [0, 1]$; the grid has `n_intervals + 1` points. |
+| `n_intervals` | int > 0 | [`default_n_intervals(r1)`](#default_n_intervals) | Number of equal intervals sampling $\tau \in [0, 1]$; the grid has `n_intervals + 1` points. Required when `r1 > 1000` or `r1 < 0.001`, where the default would exceed `MAX_DEFAULT_INTERVALS` ($10^6$). An explicit value is never limited. |
 
 **Returns** a [`QualityProfile`](#qualityprofile).
 
 **Raises**
 
 * `ValueError` if the shapes are inconsistent, `r1` or `r2` is not a positive finite
-  number, `n_intervals` is not a positive integer, the solver names are not unique or do
+  number, `n_intervals` is not a positive integer or is missing while the default grid
+  would be too large, the solver names are not unique or do
   not match the number of solvers, or $f_L^{(p)} > f^{(p)}(x_0^{(p)})$ on some problem. In
   the last case the message lists the offending rows.
 * `TypeError` if `r1` or `r2` is not a number, or `solver_names` is a single string.
@@ -190,7 +191,11 @@ default_n_intervals(r1) -> int
 ```
 
 Default number of sampling intervals, `floor(max(1000, 1000 * r1, 1000 / r1))`. See
-[Sampling](what-is-computed.md#sampling).
+[Sampling](what-is-computed.md#sampling). Raises `ValueError` if `r1` is so extreme that
+the formula overflows.
+
+`MAX_DEFAULT_INTERVALS` (`1_000_000`) is the largest grid that `quality_profiles`
+chooses automatically.
 
 ### Colors
 

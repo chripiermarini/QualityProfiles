@@ -20,7 +20,13 @@ Examples
 
 from importlib.metadata import PackageNotFoundError, version
 
-from .core import QualityProfile, default_n_intervals, quality_profiles, split_matrix
+from .core import (
+    MAX_DEFAULT_INTERVALS,
+    QualityProfile,
+    default_n_intervals,
+    quality_profiles,
+    split_matrix,
+)
 from .interactive import plot_quality_profiles_interactive
 from .plotting import PALETTE, default_colors, paper_colors, plot_quality_profiles
 
@@ -30,6 +36,7 @@ except PackageNotFoundError:  # pragma: no cover - running from a source tree
     __version__ = "0.0.0"
 
 __all__ = [
+    "MAX_DEFAULT_INTERVALS",
     "PALETTE",
     "QualityProfile",
     "__version__",

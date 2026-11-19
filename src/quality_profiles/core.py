@@ -34,6 +34,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 __all__ = [
+    "MAX_DEFAULT_INTERVALS",
     "QualityProfile",
     "default_n_intervals",
     "quality_profiles",
@@ -44,6 +45,13 @@ FloatArray = NDArray[np.float64]
 IntArray = NDArray[np.intp]
 
 _BASE_INTERVALS = 1000
+
+MAX_DEFAULT_INTERVALS = 1_000_000
+"""Largest grid chosen automatically, reached for ``r1 = 1000`` or ``r1 = 0.001``.
+
+Beyond it :func:`quality_profiles` asks for an explicit ``n_intervals`` instead of
+silently allocating a huge grid (``r1 = 10**6`` would need a billion points).
+"""
 
 
 def default_n_intervals(r1: float) -> int:
@@ -63,9 +71,17 @@ def default_n_intervals(r1: float) -> int:
     -------
     int
         ``floor(max(1000, 1000 * r1, 1000 / r1))``.
+
+    Raises
+    ------
+    ValueError
+        If ``r1`` is so extreme that the formula overflows.
     """
     r1 = _check_exponent(r1, "r1")
-    return math.floor(max(_BASE_INTERVALS, _BASE_INTERVALS * r1, _BASE_INTERVALS / r1))
+    n = max(_BASE_INTERVALS, _BASE_INTERVALS * r1, _BASE_INTERVALS / r1)
+    if not math.isfinite(n):
+        raise ValueError(f"r1 = {r1!r} is too extreme to choose a sampling grid")
+    return math.floor(n)
 
 
 def split_matrix(matrix: ArrayLike) -> tuple[FloatArray, FloatArray]:
@@ -262,7 +278,9 @@ def quality_profiles(
     n_intervals : int, optional
         Number of equal intervals used to sample :math:`\tau \in [0, 1]`
         (the grid has ``n_intervals + 1`` points). Defaults to
-        :func:`default_n_intervals` of ``r1``.
+        :func:`default_n_intervals` of ``r1``; for ``r1 > 1000`` or
+        ``r1 < 0.001`` that would exceed :data:`MAX_DEFAULT_INTERVALS`, and an
+        explicit value is required. An explicit value is never capped.
 
     Returns
     -------
@@ -273,7 +291,8 @@ def quality_profiles(
     ------
     ValueError
         If the inputs have inconsistent shapes, the exponents are not positive,
-        or :math:`f_L^{(p)} > f^{(p)}(x_0^{(p)})` on some problem (e.g. every
+        the default grid would be too large (see ``n_intervals``), or
+        :math:`f_L^{(p)} > f^{(p)}(x_0^{(p)})` on some problem (e.g. every
         solver ended above the starting value), in which case the profiles are
         not defined.
 
@@ -433,7 +452,14 @@ def _solver_names(names: Sequence[str] | None, n_solvers: int) -> tuple[str, ...
 
 def _check_intervals(n_intervals: int | None, r1: float) -> int:
     if n_intervals is None:
-        return default_n_intervals(r1)
+        n = default_n_intervals(r1)
+        if n > MAX_DEFAULT_INTERVALS:
+            raise ValueError(
+                f"r1 = {r1:g} would need a grid of {n:,} intervals (the default grows "
+                f"with r1 and 1/r1, up to {MAX_DEFAULT_INTERVALS:,}); pass n_intervals "
+                "explicitly, e.g. n_intervals=100_000"
+            )
+        return n
     try:
         valid = not isinstance(n_intervals, bool) and int(n_intervals) == n_intervals >= 1
     except (TypeError, ValueError, OverflowError):

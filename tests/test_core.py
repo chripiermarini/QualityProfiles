@@ -5,6 +5,7 @@ import pytest
 
 from conftest import load_csv, reference_loop
 from quality_profiles import (
+    MAX_DEFAULT_INTERVALS,
     QualityProfile,
     default_n_intervals,
     quality_profiles,
@@ -330,6 +331,28 @@ def test_profiles_compare_by_identity_and_are_hashable(random_problem):
     assert a == a
     assert a != b  # distinct objects, even with equal data; no ambiguous-array error
     assert len({a, b, a}) == 2
+
+
+@pytest.mark.parametrize("r1", [1000, 0.001])
+def test_largest_default_grid_is_allowed(r1):
+    assert default_n_intervals(r1) == MAX_DEFAULT_INTERVALS
+    qp = quality_profiles([1.0], [[0.5]], r1=r1)
+    assert qp.tau.size == MAX_DEFAULT_INTERVALS + 1
+
+
+@pytest.mark.parametrize("r1", [1000.5, 1e6, 0.0009, 1e-9])
+def test_too_large_default_grid_asks_for_n_intervals(r1):
+    with pytest.raises(ValueError, match="pass n_intervals explicitly"):
+        quality_profiles([1.0], [[0.5]], r1=r1)
+    # an explicit grid is accepted for any r1
+    qp = quality_profiles([1.0], [[0.5]], r1=r1, n_intervals=50)
+    assert qp.tau.size == 51
+
+
+@pytest.mark.parametrize("r1", [1e306, 1e-306])
+def test_default_n_intervals_rejects_overflow(r1):
+    with pytest.raises(ValueError, match="too extreme"):
+        default_n_intervals(r1)
 
 
 @pytest.mark.parametrize("bad", [float("nan"), float("inf"), "10", object(), -3, 0, 2.5])
