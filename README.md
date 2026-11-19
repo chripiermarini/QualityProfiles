@@ -3,6 +3,10 @@
 <p align="center"><i>Benchmark optimization solvers by the quality of the solutions they return.</i></p>
 
 <p align="center">
+  <img src="docs/assets/banner.svg" alt="Quality Profiles: benchmark optimization solvers by the quality of their solutions" width="85%">
+</p>
+
+<p align="center">
   <a href="docs/"><img alt="Docs" src="https://img.shields.io/badge/docs-markdown-informational"/></a>
   <a href="https://arxiv.org/abs/2607.16798"><img alt="Paper" src="https://img.shields.io/badge/arXiv-2607.16798-b31b1b?logo=arxiv"/></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
