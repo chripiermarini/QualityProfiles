@@ -150,11 +150,13 @@ def plot_quality_profiles(
     title: str | None = None,
     grid: bool | None = None,
     style: str | Sequence[str] | None = None,
+    steps: bool = True,
 ) -> Axes:
     r"""Plot quality profiles :math:`[Q_s(\tau^{r_1})]^{r_2}` against :math:`\tau^{r_1}`.
 
-    Profiles are drawn as step functions. Each solver keeps the same color and
-    line style when only a subset of solvers is drawn.
+    Profiles are drawn as step functions (or, with ``steps=False``, as straight
+    segments between the sampled precision levels). Each solver keeps the same
+    color and line style when only a subset of solvers is drawn.
 
     Parameters
     ----------
@@ -200,6 +202,13 @@ def plot_quality_profiles(
         ticks and colors then come from the style. If ``"science"`` is
         requested and no LaTeX installation is found, ``"no-latex"`` is added.
         Leave ``ax=None`` so that the figure itself is created with the style.
+    steps : bool, default True
+        Draw each profile as a step function, which is its exact shape: it only
+        changes by jumps of :math:`1/|P|` (before the scaling by ``r2``).
+        ``False`` joins consecutive grid points with straight segments, as the
+        reference MATLAB code does. The values at the grid points are the same,
+        but where the grid is sparse (near the left end of a logarithmic axis)
+        the segments are slanted.
 
     Returns
     -------
@@ -219,6 +228,7 @@ def plot_quality_profiles(
         "legend_loc": legend_loc,
         "title": title,
         "grid": grid,
+        "steps": steps,
     }
     styles = _resolve_style(style)
     if styles is None:
@@ -265,6 +275,7 @@ def _draw(
     legend_loc: str,
     title: str | None,
     grid: bool | None,
+    steps: bool,
 ) -> Axes:
     import matplotlib.pyplot as plt
 
@@ -309,7 +320,7 @@ def _draw(
             color=palette[col],
             linestyle=styles[col % len(styles)],
             linewidth=linewidth,
-            drawstyle="steps-post",
+            drawstyle="steps-post" if steps else "default",
             label=profile.solver_names[col],
             zorder=3,
         )

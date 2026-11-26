@@ -104,7 +104,7 @@ plot_quality_profiles(
     profile, ax=None, *,
     logscale=True, solvers=None, colors=None, linestyles=None, linewidth=None,
     reference_lines=None, legend=True, legend_loc="best", title=None, grid=None,
-    style=None,
+    style=None, steps=True,
 ) -> matplotlib.axes.Axes
 ```
 
@@ -126,6 +126,7 @@ keeps the same color and line style, also when only some of the solvers are draw
 | `title` | none | Axes title. |
 | `grid` | light grid, or the style's choice | Draw a grid. |
 | `style` | none | A matplotlib style or list of styles, used instead of the package's look: for example `"ggplot"`, `"science"` or `["science", "ieee"]`. The SciencePlots styles need the `[science]` extra. If `"science"` is used and LaTeX is not installed, `"no-latex"` is added automatically. The style applies to this figure only. |
+| `steps` | `True` | Draw each profile as a step function, its exact shape. `False` joins consecutive grid points with straight segments, as the reference MATLAB code does: the values at the grid points are the same, but the segments are slanted where the grid is sparse (near the left end of a log axis). |
 
 **Returns** the matplotlib axes. Save the figure with `ax.figure.savefig(...)`: the
 format follows the extension (`.pdf`, `.svg`, `.png`, ...). For a paper, prefer PDF.
@@ -147,7 +148,7 @@ ax.figure.savefig("profiles.pdf")
 plot_quality_profiles_interactive(
     profile, *,
     logscale=True, solvers=None, colors=None, linewidth=2.0, reference_lines=None,
-    title=None, height=420, width=None,
+    title=None, height=420, width=None, steps=True,
 ) -> plotly.graph_objects.Figure
 ```
 
@@ -155,13 +156,13 @@ Interactive version of the plot: drag to zoom, double-click to reset, click a le
 entry to hide a solver, and hover to read the value of every solver at a precision
 level. Requires the `[interactive]` extra (Plotly).
 
-The parameters `logscale`, `solvers`, `colors`, `linewidth`, `reference_lines` and
-`title` mean the same as for [`plot_quality_profiles`](#plot_quality_profiles); colors
+The parameters `logscale`, `solvers`, `colors`, `linewidth`, `reference_lines`,
+`title` and `steps` mean the same as for [`plot_quality_profiles`](#plot_quality_profiles); colors
 must be CSS colors. `height` and `width` are in pixels; by default the width follows the
 container.
 
-Each step curve is reduced to its jump points before drawing, so the figure is identical
-to the full curve but much smaller.
+Each curve is reduced to the points around its jumps before drawing, so the figure is
+identical to the full curve (with steps or with straight segments) but much smaller.
 
 **Returns** a Plotly figure. Show it with `fig.show()`, or save it with
 `fig.write_html("profiles.html")`. With `include_plotlyjs="cdn"` the file is small but

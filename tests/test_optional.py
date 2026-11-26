@@ -149,6 +149,17 @@ def test_interactive_figure(profile):
         np.testing.assert_array_equal(_as_step(trace.x, trace.y, x_full), y_full)
 
 
+def test_interactive_straight_segments(profile):
+    # steps=False: the thinned polyline, drawn with straight segments, passes through
+    # every grid point of the profile, as the full MATLAB-like curve does.
+    pytest.importorskip("plotly")
+    fig = plot_quality_profiles_interactive(profile, steps=False)
+    assert all(t.line.shape == "linear" for t in fig.data)
+    for s, trace in enumerate(fig.data):
+        x_full, y_full = profile.precision[1:], profile.values[1:, s]
+        np.testing.assert_array_equal(np.interp(x_full, trace.x, trace.y), y_full)
+
+
 def _as_step(xs, ys, x_full):
     """Evaluate a horizontal-then-vertical polyline at the grid points."""
     return np.asarray(ys)[np.searchsorted(np.asarray(xs), x_full, side="right") - 1]

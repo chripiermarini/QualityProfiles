@@ -79,6 +79,16 @@ def test_profiles_are_drawn_as_steps(profile):
     assert all(line.get_drawstyle() == "steps-post" for line in ax.get_lines())
 
 
+def test_straight_segments_option(profile):
+    # steps=False joins the grid points with straight segments, as the MATLAB code
+    # does; the plotted points are the same.
+    steps = plot_quality_profiles(profile)
+    segments = plot_quality_profiles(profile, steps=False)
+    assert all(line.get_drawstyle() == "default" for line in segments.get_lines())
+    for a, b in zip(steps.get_lines(), segments.get_lines(), strict=True):
+        np.testing.assert_array_equal(a.get_xydata(), b.get_xydata())
+
+
 def test_underflowing_precision_levels_are_skipped_on_log_axes():
     # with r1 = 100 the first levels (1/n)**100 underflow to 0
     qp = quality_profiles([1.0, 1.0], [[1e-300, 0.5], [0.0, 0.0]], r1=100)

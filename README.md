@@ -171,7 +171,7 @@ Hovering shows the value of every solver at the precision level under the cursor
 
 With many solvers, click a name in the legend to hide it, and drag a box to zoom; a
 double-click goes back to the full view. Here, on the seven derivative-free solvers of
-Figure 7(a):
+Figure 7(a), with `r1 = 5` instead of 1 to reach high accuracy:
 
 <p align="center">
   <img src="docs/assets/plotly_legend_zoom.gif" alt="Hiding solvers from the legend and zooming on the high-accuracy range" width="85%">

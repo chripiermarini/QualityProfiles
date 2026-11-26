@@ -14,7 +14,7 @@ Files written to ``docs/assets``:
 * ``style_plotly.png``: the same profiles in the interactive Plotly figure;
 * ``plotly_hover.gif``: the cursor moving along the curves, with the hover values;
 * ``plotly_legend_zoom.gif``: hiding solvers from the legend and zooming, on the
-  derivative-free experiment (Figure 7(a), seven solvers).
+  derivative-free experiment (data of Figure 7(a), seven solvers, ``r1 = 5``).
 """
 
 from __future__ import annotations

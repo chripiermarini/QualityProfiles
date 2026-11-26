@@ -63,6 +63,7 @@ def plot_quality_profiles_interactive(
     title: str | None = None,
     height: int = 420,
     width: int | None = None,
+    steps: bool = True,
 ) -> Any:
     r"""Interactive Plotly figure of the quality profiles :math:`[Q_s(\tau^{r_1})]^{r_2}`.
 
@@ -90,6 +91,10 @@ def plot_quality_profiles_interactive(
         Figure title.
     height, width : int, optional
         Size of the figure in pixels. The width follows the container by default.
+    steps : bool, default True
+        Draw each profile as a step function. ``False`` joins consecutive grid
+        points with straight segments, as the reference MATLAB code does
+        (see :func:`~quality_profiles.plot_quality_profiles`).
 
     Returns
     -------
@@ -121,6 +126,8 @@ def plot_quality_profiles_interactive(
     fig = go.Figure()
     for col in columns:
         name = profile.solver_names[col]
+        # The retained points also describe the piecewise linear curve exactly: they
+        # include both ends of every segment along which the value changes.
         xs, ys = step_points(x[rows], profile.values[rows, col])
         fig.add_trace(
             go.Scatter(
@@ -129,7 +136,7 @@ def plot_quality_profiles_interactive(
                 name=name,
                 mode="lines",
                 line={
-                    "shape": "hv",
+                    "shape": "hv" if steps else "linear",
                     "width": linewidth,
                     "color": palette[col],
                     "dash": PLOTLY_DASHES[col % len(PLOTLY_DASHES)],
