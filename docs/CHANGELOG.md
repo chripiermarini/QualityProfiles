@@ -3,7 +3,13 @@
 All notable changes to Quality Profiles are listed here. The project follows
 [semantic versioning](https://semver.org).
 
-## Unreleased
+## 1.1.0
+
+### Plotting
+
+* `plot_quality_profiles` and `plot_quality_profiles_interactive` accept `steps=False`
+  to join the grid points with straight segments, as the reference MATLAB code does,
+  instead of drawing step functions (the default, and the exact shape of a profile).
 
 ### Examples
 

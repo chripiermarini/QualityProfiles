@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the paper below."
 title: "Quality Profiles: benchmarking optimization algorithms by the quality of their solutions"
-version: 1.0.0
+version: 1.1.0
 license: MIT
 repository-code: "https://github.com/chripiermarini/QualityProfiles"
 authors:
