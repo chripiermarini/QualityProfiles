@@ -40,7 +40,7 @@ Before opening a pull request, run:
 
 ```bash
 uv run pytest                      # unit tests and doctests
-uv run pytest --nbmake notebooks   # the example notebook
+uv run pytest --nbmake notebooks   # the notebooks of the paper's figures
 uv run ruff check .                # lint
 uv run ruff format .               # format (the style is the same as Black)
 uv run mypy                        # strict type checking
@@ -64,7 +64,7 @@ The same checks run on GitHub Actions, on Linux, macOS and Windows, for Python 3
   goes into an optional extra (as Plotly and SciencePlots do), imported only when used,
   with a clear message if it is missing.
 * **Documentation.** Update [`api.md`](api.md) or [`what-is-computed.md`](what-is-computed.md)
-  when you change the public API or the behaviour, and the example notebook when it is
+  when you change the public API or the behaviour, and the notebooks when they are
   affected.
 * **Data.** The files in `examples/data` hold the results published with the paper:
   please do not change their values. See [`examples/data/README.md`](../examples/data/README.md).

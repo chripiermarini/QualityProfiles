@@ -3,6 +3,18 @@
 All notable changes to Quality Profiles are listed here. The project follows
 [semantic versioning](https://semver.org).
 
+## Unreleased
+
+### Examples
+
+* One notebook per group of figures of the paper (`notebooks/01_first_example.ipynb` to
+  `04_derivative_free.ipynb`), with the same data, `r1` and `r2` as the reference MATLAB
+  scripts. They replace `quality_profiles_example.ipynb`.
+* Figure numbers now follow the paper accepted in Mathematical Programming Computation,
+  in `examples/reproduce_paper_figures.py` and in the documentation of the data.
+* `examples/data/two_solvers.csv` is back: it is the data of Figures 2 and 3, taken from
+  the MATLAB script `*_Figures_2_3.m`.
+
 ## 1.0.0
 
 First public release.

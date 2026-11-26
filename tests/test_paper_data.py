@@ -27,12 +27,13 @@ DFO = ["dfo_budget_1000n", "dfo_budget_750n", "dfo_budget_500n", "dfo_budget_250
 
 
 def test_datasets(paper_data):
-    assert paper_data.dataset_names() == sorted([*SMOOTH, *DFO])
+    assert paper_data.dataset_names() == sorted(["two_solvers", *SMOOTH, *DFO])
 
 
 @pytest.mark.parametrize(
     ("name", "rows", "solvers"),
     [
+        ("two_solvers", 166, ["Solver-1", "Solver-2"]),
         ("cutest_smooth", 166, ["L-BFGS", "CG+", "TRON", "CG_DESCENT"]),
         ("negative_curvature", 166, ["TN-NONegCurv", "TN-NC1", "TN-NC2", "TN-NC3"]),
         ("dfo_budget_250n", 145, ["NEWUOA", "ALG1", "ALG2", "ALG4", "ALG6", "ALG7", "ALG8"]),
@@ -128,7 +129,7 @@ def _run_script(path: Path, monkeypatch, argv=()):
 
 def test_reproduce_paper_figures_runs(tmp_path, monkeypatch):
     _run_script(EXAMPLES / "reproduce_paper_figures.py", monkeypatch, [str(tmp_path)])
-    assert len(list(tmp_path.glob("*.png"))) == 12
+    assert len(list(tmp_path.glob("*.png"))) == 10
 
 
 def test_readme_figure_script_runs(tmp_path, monkeypatch):

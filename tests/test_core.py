@@ -52,6 +52,8 @@ def assert_same_as_reference(f0, fs, solver_names=None, **options):
 @pytest.mark.parametrize(
     ("name", "r1", "r2"),
     [
+        ("two_solvers", 10, 3),
+        ("two_solvers", 4, 1),
         ("cutest_smooth", 10, 3),
         ("cutest_smooth", 1, 1),
         ("cutest_smooth", 5, 1),

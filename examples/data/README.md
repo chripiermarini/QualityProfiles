@@ -3,7 +3,8 @@
 Each CSV file holds one experiment of arXiv:2607.16798. There is one row per test
 problem, with the columns:
 
-* `problem`, `n`: the CUTEst problem and its dimension;
+* `problem`, `n`: the CUTEst problem and its dimension (not available for
+  `two_solvers.csv`);
 * `f0`: the objective value at the common starting point;
 * one column per solver, with the best objective value it found; the header gives the
   solver name.
@@ -21,14 +22,17 @@ f0, f_solvers, names = load("cutest_smooth", n=10000)   # the 45 instances with 
 
 | File | Problems | Solvers | Paper figures |
 | --- | --- | --- | --- |
-| `cutest_smooth.csv` | 166 | L-BFGS, CG+, TRON, CG_DESCENT | 4 (`r1=1`), 5 (`r1=5`), 6–8 |
-| `negative_curvature.csv` | 166 | TN-NONegCurv, TN-NC1, TN-NC2, TN-NC3 | 9–11 |
-| `dfo_budget_1000n.csv` | 145 | NEWUOA, ALG1, ALG2, ALG4, ALG6, ALG7, ALG8 | 12 (budget 1000·n) |
-| `dfo_budget_750n.csv` | 145 | same | 13 (budget 750·n) |
-| `dfo_budget_500n.csv` | 145 | same | 14 (budget 500·n) |
-| `dfo_budget_250n.csv` | 145 | same | 15 (budget 250·n) |
+| `two_solvers.csv` | 166 | Solver-1, Solver-2 | 2 (`r1=10, r2=3`), 3 (`r1=4, r2=1`) |
+| `cutest_smooth.csv` | 166 | L-BFGS, CG+, TRON, CG_DESCENT | 4 (`r1=1`), 5 (`r1=5`); 8, 9 (`n=10000`) |
+| `negative_curvature.csv` | 166 | TN-NONegCurv, TN-NC1, TN-NC2, TN-NC3 | 6; 10 (`n=10000`) |
+| `dfo_budget_1000n.csv` | 145 | NEWUOA, ALG1, ALG2, ALG4, ALG6, ALG7, ALG8 | 7(a); 11(a) (`n=100`) |
+| `dfo_budget_750n.csv` | 145 | same | 7(b); 11(b) (`n=100`) |
+| `dfo_budget_500n.csv` | 145 | same | 7(c); 11(c) (`n=100`) |
+| `dfo_budget_250n.csv` | 145 | same | 7(d); 11(d) (`n=100`) |
 
-Figure numbers refer to version 1 of the arXiv preprint.
+Figure numbers refer to the paper accepted in Mathematical Programming Computation; they
+match the names of the MATLAB scripts of the reference repository. Unless stated in the
+table, `r1 = r2 = 1`. The notebooks in [`notebooks/`](../../notebooks) draw every figure.
 
 The smooth experiments use large-scale unconstrained CUTEst problems (Table 1 of the
 paper). The derivative-free ones use the CUTEst selection of Table 2. In the DFO files,
@@ -52,6 +56,10 @@ repository ([fasano-g/Quality-Profiles](https://github.com/fasano-g/Quality-Prof
 raw result files of the same repository (`Section2-SmoothOptimization/` and
 `Section3-DerivativeFreeOptimization/`); rows were matched by their starting values and,
 where available, by the solvers' results.
+
+`two_solvers.csv` is the `TT` matrix of `*_Figures_2_3.m`, copied unchanged. The paper
+uses it as an example and does not name the solvers or the problems, so the file has
+no `problem` and `n` columns; all values have three significant digits.
 
 One correction was made: three entries of the CG_DESCENT column of `cutest_smooth.csv`
 (problem VARDIM with n = 1000, 5000 and 10000, rows 158–160) are written in Fortran

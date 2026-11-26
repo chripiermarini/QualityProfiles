@@ -128,8 +128,8 @@ fig.show()                                                 # zoom, hover, hide s
 fig.write_html("profiles.html")
 ```
 
-The notebook [`notebooks/quality_profiles_example.ipynb`](notebooks/quality_profiles_example.ipynb)
-walks through the paper's examples on the published results.
+The notebooks in [`notebooks/`](notebooks) draw every quality-profile figure of the paper
+from the published results, with the same parameters as the reference MATLAB scripts.
 
 ## Plot styles
 
@@ -171,7 +171,7 @@ Hovering shows the value of every solver at the precision level under the cursor
 
 With many solvers, click a name in the legend to hide it, and drag a box to zoom; a
 double-click goes back to the full view. Here, on the seven derivative-free solvers of
-Figure 12:
+Figure 7(a):
 
 <p align="center">
   <img src="docs/assets/plotly_legend_zoom.gif" alt="Hiding solvers from the legend and zooming on the high-accuracy range" width="85%">
@@ -228,12 +228,13 @@ them, also restricted to one problem dimension, e.g. `load("cutest_smooth", n=10
 
 | File | Problems | Solvers | Paper figures |
 | --- | --- | --- | --- |
-| `cutest_smooth.csv` | 166 | L-BFGS, CG+, TRON, CG_DESCENT | 4–8 |
-| `negative_curvature.csv` | 166 | TN-NONegCurv, TN-NC1, TN-NC2, TN-NC3 | 9–11 |
-| `dfo_budget_1000n.csv` | 145 | NEWUOA and six Direct Search methods | 12 |
-| `dfo_budget_750n.csv` | 145 | same | 13 |
-| `dfo_budget_500n.csv` | 145 | same | 14 |
-| `dfo_budget_250n.csv` | 145 | same | 15 |
+| `two_solvers.csv` | 166 | Solver-1, Solver-2 | 2, 3 |
+| `cutest_smooth.csv` | 166 | L-BFGS, CG+, TRON, CG_DESCENT | 4, 5, 8, 9 |
+| `negative_curvature.csv` | 166 | TN-NONegCurv, TN-NC1, TN-NC2, TN-NC3 | 6, 10 |
+| `dfo_budget_1000n.csv` | 145 | NEWUOA and six Direct Search methods | 7(a), 11(a) |
+| `dfo_budget_750n.csv` | 145 | same | 7(b), 11(b) |
+| `dfo_budget_500n.csv` | 145 | same | 7(c), 11(c) |
+| `dfo_budget_250n.csv` | 145 | same | 7(d), 11(d) |
 
 </div>
 
@@ -253,7 +254,7 @@ uv run python examples/try_plot_styles.py --help     # SciencePlots and Plotly o
 ```bash
 uv sync                          # environment with Plotly, SciencePlots and the dev tools
 uv run pytest                    # unit tests and doctests
-uv run pytest --nbmake notebooks # execute the example notebook
+uv run pytest --nbmake notebooks # execute the notebooks
 uv run ruff check . && uv run ruff format --check .
 uv run mypy                      # strict type checking
 uv build                         # build the sdist and the wheel into dist/
